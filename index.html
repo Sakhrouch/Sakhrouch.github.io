@@ -399,6 +399,75 @@ body{position:relative}
 .cell .big-num{font-size:clamp(38px,3.6vw,54px);overflow-wrap:anywhere}
 .bento .c-tall{grid-row:span 2;min-height:420px}
 .bento{grid-auto-rows:minmax(180px,auto)}
+/* Behance-style scenes: coloured backdrop, giant word, 3D device */
+.scene{position:absolute;inset:0;overflow:hidden;perspective:1700px;background:var(--sbg)}
+.scene::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 70% 30%,rgba(255,255,255,.18),transparent 70%)}
+.scene::after{content:"";position:absolute;left:18%;right:18%;bottom:7%;height:40px;border-radius:50%;background:rgba(0,0,0,.45);filter:blur(22px)}
+.scene .word{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);font-family:var(--display);font-weight:700;font-size:clamp(84px,12vw,176px);letter-spacing:-.06em;line-height:.8;color:var(--sink);white-space:nowrap;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.proj:hover .scene .word{transform:translate(-50%,-50%) scale(1.06)}
+.tablet{position:absolute;left:50%;top:52%;width:72%;z-index:2;transform:translate(-50%,-50%) rotateX(20deg) rotateY(-18deg) rotateZ(7deg);transform-style:preserve-3d;border-radius:24px;background:linear-gradient(145deg,#2b2d31,#0c0d0f 40%);padding:11px;box-shadow:inset 0 0 0 1.5px #3c3f45,-40px 60px 80px -30px rgba(0,0,0,.75);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.tablet .scr{border-radius:14px;overflow:hidden;aspect-ratio:4/3;background:#fff}
+.tablet .scr img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.tablet .scr.wide img{object-fit:contain;background:#0b0e11}
+.proj:hover .tablet{transform:translate(-50%,-52%) rotateX(8deg) rotateY(-6deg) rotateZ(2deg) scale(1.03)}
+.glass{position:absolute;z-index:3;right:7%;top:12%;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#fff;box-shadow:0 20px 40px -18px rgba(0,0,0,.5);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.glass b{display:block;font-family:var(--display);font-size:24px;line-height:1}
+.glass small{font-size:11px;opacity:.9}
+.proj:hover .glass{transform:translate(-8px,-8px)}
+.scene .phone3d{position:absolute;top:50%;z-index:2;height:86%;width:auto;filter:drop-shadow(-24px 34px 30px rgba(0,0,0,.55));transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.scene .phone3d.p0{left:28%;transform:translate(-50%,-50%) rotateY(22deg) rotateZ(-7deg)}
+.scene .phone3d.p1{left:56%;transform:translate(-50%,-46%) rotateY(-16deg) rotateZ(6deg);z-index:3}
+.scene .phone3d.p2{left:80%;transform:translate(-50%,-54%) rotateY(-24deg) rotateZ(10deg) scale(.88);opacity:.95}
+.proj:hover .scene .phone3d.p0{transform:translate(-56%,-52%) rotateY(10deg) rotateZ(-3deg)}
+.proj:hover .scene .phone3d.p1{transform:translate(-50%,-50%) rotateY(0) rotateZ(0) scale(1.04)}
+.proj:hover .scene .phone3d.p2{transform:translate(-44%,-56%) rotateY(-10deg) rotateZ(4deg) scale(.88)}
+.scene.light .glass{background:rgba(255,255,255,.55);color:#1d1408;border-color:rgba(255,255,255,.8)}
+.scene .tablet.wide-dev{width:86%}
+/* idle float (uses `translate`, so it stacks with the hover transforms) */
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@keyframes bob2{0%,100%{translate:0 0}50%{translate:0 8px}}
+.tablet,.phone3d.p1{animation:bob 6s ease-in-out infinite}
+.phone3d.p0,.phone3d.p2{animation:bob2 7s ease-in-out infinite}
+.glass{animation:bob 5s ease-in-out infinite .8s}
+/* headings: words rise one by one */
+.split .wd{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em}
+.split .wd>span{display:inline-block;transform:translateY(105%);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.split.in .wd>span{transform:none}
+.split .grad{background:none;color:inherit}
+.split .grad .wd>span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#spot{position:fixed;inset:0;pointer-events:none;z-index:1;mix-blend-mode:screen}
+/* sound toggle */
+.snd-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);padding:10px 14px;border-radius:999px;cursor:pointer;margin-left:8px}
+.snd-btn i{display:inline-flex;gap:2px;align-items:flex-end;height:12px}
+.snd-btn i b{width:2px;background:var(--muted);height:3px;border-radius:2px;transition:background .3s}
+.snd-btn.on i b{background:var(--blue);animation:eq .9s ease-in-out infinite}
+.snd-btn.on i b:nth-child(2){animation-delay:.2s}.snd-btn.on i b:nth-child(3){animation-delay:.4s}.snd-btn.on i b:nth-child(4){animation-delay:.1s}
+@keyframes eq{0%,100%{height:3px}50%{height:12px}}
+@media (max-width:600px){.snd-btn span{display:none}.snd-btn{padding:9px 11px}}
+@media (max-width:600px){.glass{display:none}.tablet{width:84%}.scene .phone3d.p2{display:none}.scene .phone3d.p0{left:34%}.scene .phone3d.p1{left:66%}}
+/* 3D stack cover */
+.stack{position:absolute;inset:0;perspective:1400px;overflow:hidden;
+  background:radial-gradient(520px 320px at 70% 20%,rgba(141,241,9,.22),transparent 70%),radial-gradient(420px 260px at 10% 100%,rgba(141,241,9,.08),transparent 70%),#0b0e11}
+.stack::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:36px 36px}
+.shot{position:absolute;left:50%;top:50%;width:70%;aspect-ratio:16/10;border-radius:12px;overflow:hidden;background:#111;border:1px solid rgba(255,255,255,.14);box-shadow:0 40px 70px -30px rgba(0,0,0,.95);transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .5s}
+.shot img{width:100%;height:100%;object-fit:contain;display:block}
+.shot.long img{object-fit:cover;object-position:top center}
+.shot.s0{transform:translate(-50%,-50%) rotateY(-14deg) rotateX(6deg);z-index:3}
+.shot.s1{transform:translate(-72%,-74%) rotate(-7deg) scale(.82);opacity:.55;z-index:2}
+.shot.s2{transform:translate(-26%,-26%) rotate(6deg) scale(.78);opacity:.4;z-index:1}
+.proj:hover .shot.s0{transform:translate(-50%,-52%) rotateY(0) rotateX(0) scale(1.04)}
+.proj:hover .shot.s1{transform:translate(-90%,-80%) rotate(-11deg) scale(.82);opacity:.75}
+.proj:hover .shot.s2{transform:translate(-8%,-18%) rotate(10deg) scale(.78);opacity:.6}
+.stack-tag{position:absolute;left:22px;bottom:20px;z-index:4;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:#080A0C;background:var(--blue);padding:6px 11px;border-radius:999px;box-shadow:0 8px 24px -6px rgba(141,241,9,.6)}
+/* gallery desktop screens: full width, long pages scroll inside */
+.mock-plain.screen{max-height:64vh;overflow-y:auto;background:#111}
+.mock-plain.screen img{max-height:none;object-fit:initial}
+/* device shots (images already framed) */
+.phone-shot{height:auto;max-height:90%;max-width:31%;width:auto;filter:drop-shadow(0 24px 40px rgba(0,0,0,.6));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.stage.phones .phone-shot:nth-child(2){transform:translateY(-14px)}
+.proj:hover .stage.phones .phone-shot{transform:translateY(-10px)}
+.slide .phone-shot{height:auto;max-height:64vh;width:auto;max-width:100%}
+@media (max-width:960px){.stage.phones .phone-shot:nth-child(n+3){display:none}}
 /* magnetic */
 .mag{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
 
@@ -461,6 +530,7 @@ body{position:relative}
   </div>
   <div class="nav-right">
     <a href="#contact" class="btn btn-primary btn-sm mag">Me contacter <span>↗</span></a>
+    <button class="snd-btn" id="sndBtn" aria-pressed="false" aria-label="Activer les sons"><i><b></b><b></b><b></b><b></b></i><span>SON</span></button>
     <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">MENU +</button>
   </div>
 </nav>
@@ -536,7 +606,7 @@ body{position:relative}
 <!-- SIGNAL -->
 <section class="wrap" id="signal">
   <p class="mono reveal">00 / Le signal</p>
-  <p class="signal reveal" style="margin-top:26px">Je conçois des <span class="pill-img"><img src="assets/projects/event-2.png" alt=""></span> interfaces claires, <span class="soft">des</span> <span class="pill-img"><img src="assets/projects/nova-affiche-1.webp" alt=""></span> marques qui parlent <span class="soft">et du</span> <span class="pill-code">&lt;/&gt;</span> code propre.</p>
+  <p class="signal reveal" style="margin-top:26px">Je conçois des <span class="pill-img"><img src="assets/projects/event-2.webp" alt=""></span> interfaces claires, <span class="soft">des</span> <span class="pill-img"><img src="assets/projects/nova-affiche-1.webp" alt=""></span> marques qui parlent <span class="soft">et du</span> <span class="pill-code">&lt;/&gt;</span> code propre.</p>
   <div class="services">
     <div class="svc reveal"><span class="ic">◐</span><span class="mono">01 / UX & UI</span><h3>Des interfaces qui se comprennent.</h3><p>Recherche, parcours, wireframes et prototypes Figma, jusqu'au design system.</p></div>
     <div class="svc reveal"><span class="ic">✦</span><span class="mono">02 / Marque & visuel</span><h3>Une identité qui se retient.</h3><p>Logos, chartes graphiques, affiches et campagnes, du concept au fichier final.</p></div>
@@ -807,24 +877,42 @@ const MEDIA={
     {src:"assets/projects/nova-affiche-2.webp",type:"image",caption:"Campagne : « Les murs de silence », en trois déclinaisons de couleur"},
     {src:"assets/projects/nova-affiche-3.webp",type:"image",caption:"Série pédagogique : trouble anxieux, dépression, burnout"}]},
   vr:{url:"gabes-margoum.app",images:[
-    {src:"assets/projects/event-1.png",type:"mobile",caption:"Onboarding : les artisanes et le savoir-faire du margoum, dès le premier écran"},
-    {src:"assets/projects/event-2.png",type:"mobile",caption:"Accueil : statut de l'événement en direct, programme par jour et porte-clés NFC connecté"},
+    {src:"assets/projects/event-1.webp",type:"mobile",caption:"Onboarding : les artisanes et le savoir-faire du margoum, dès le premier écran"},
+    {src:"assets/projects/event-2.webp",type:"mobile",caption:"Accueil : statut de l'événement en direct, programme par jour et porte-clés NFC connecté"},
     {src:"assets/projects/event-3.png",type:"mobile",caption:"Billetterie : billet mobile avec code-barres et période de validité"},
     {src:"assets/projects/event-4.png",type:"mobile",caption:"Réalité augmentée : guidage pas à pas jusqu'à l'élément recherché"}]}
 };
+/* one colour scene per project, taken from each project's own palette */
+const SCENES={
+  mind:{bg:'linear-gradient(150deg,#E3D8EC,#b9a6d8)',ink:'#1C0040',word:'NOVA',chip:['45,3 %','détresse psychologique']},
+  vr:{bg:'linear-gradient(150deg,#2f6fd6,#121a5c)',ink:'rgba(255,255,255,.16)',word:'MARGOUM',chip:['AR','navigation guidée']},
+  rouh:{bg:'linear-gradient(150deg,#efe4d3,#cdb79a)',ink:'#3b2a1a',word:'روح',chip:['5 écrans','accueil → paiement'],light:true},
+  bct:{bg:'linear-gradient(150deg,#1d3a6e,#0a1630)',ink:'rgba(255,255,255,.1)',word:'BCT',chip:['Angular','Figma → code']},
+  makina:{bg:'linear-gradient(150deg,#8DF109,#3f7a00)',ink:'#0b1a00',word:'MAKINA',chip:['24','gouvernorats']}
+};
 const browser=(im,url)=>`<div class="mock-browser"><div class="mb-bar"><i></i><i></i><i></i><span class="mb-url">${url}</span></div><div class="mb-screen"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div></div>`;
-const phone=im=>`<div class="mock-phone"><div class="ps"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div></div>`;
+const phone=im=>`<img class="phone-shot" src="${im.src}" alt="${im.caption||''}" loading="lazy">`;
 const plain=im=>`<div class="mock-plain"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div>`;
-const device=(im,url)=>im.type==='mobile'?phone(im):im.type==='image'?plain(im):browser(im,url);
+/* desktop screens in the gallery: full width, never cropped (long pages scroll inside) */
+const screen=im=>`<div class="mock-plain screen"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div>`;
+const device=(im,url)=>im.type==='mobile'?phone(im):im.type==='image'?plain(im):screen(im);
+/* card cover: a 3D stack of up to 3 screens, each shown whole */
+const stack=(list,label)=>`<div class="stack">${list.slice(0,3).map((im,i)=>`<div class="shot s${i}"><img src="${im.src}" alt="" loading="lazy"></div>`).reverse().join('')}<span class="stack-tag">${label}</span></div>`;
 
 /* swap CSS placeholder visuals for real screens when available */
 document.querySelectorAll('.proj').forEach(card=>{
   const m=MEDIA[card.dataset.id]; if(!m||!m.images.length) return;
-  const d=m.images.find(i=>i.type!=='mobile'), phones=m.images.filter(i=>i.type==='mobile');
+  const desk=m.images.filter(i=>i.type==='desktop'), phones=m.images.filter(i=>i.type==='mobile');
+  const s=SCENES[card.dataset.id]||{bg:'#11161a',ink:'rgba(255,255,255,.06)',word:''};
   const v=card.querySelector('.visual'); v.className='visual';
-  v.innerHTML=`<div class="stage${d?'':' phones'}">${d?browser(d,m.url)+(phones[0]?phone(phones[0]):''):phones.slice(1,4).map(phone).join('')}</div>`;
+  const glass=s.chip?`<div class="glass"><b>${s.chip[0]}</b><small>${s.chip[1]}</small></div>`:'';
+  const body=desk.length
+    ?`<div class="tablet"><div class="scr"><img src="${(desk[s.cover||0]||desk[0]).src}" alt="" loading="lazy"></div></div>`
+    :phones.slice(1,4).map((p,i)=>`<img class="phone3d p${i}" src="${p.src}" alt="" loading="lazy">`).join('');
+  v.innerHTML=`<div class="scene${s.light?' light':''}" style="--sbg:${s.bg};--sink:${s.ink}"><span class="word">${s.word}</span>${body}${glass}</div>`;
 });
-document.addEventListener('load',e=>{const im=e.target; if(im.tagName==='IMG'&&im.closest('.mb-screen')&&im.naturalHeight/im.naturalWidth>.8) im.classList.add('tall')},true);
+/* wide screenshots (dashboards) are shown whole inside the tablet instead of cropped */
+document.addEventListener('load',e=>{const im=e.target; const s=im.tagName==='IMG'&&im.closest('.tablet .scr'); if(!s) return; const r=im.naturalWidth/im.naturalHeight; if(r>1.45){s.classList.add('wide'); s.style.aspectRatio=`${im.naturalWidth}/${im.naturalHeight}`; s.closest('.tablet').classList.add('wide-dev')}},true);
 
 const dlg=document.getElementById('dlg');
 let gi=0;
@@ -928,6 +1016,63 @@ document.querySelectorAll('.tok').forEach(t=>t.addEventListener('click',()=>{
   try{navigator.clipboard.writeText(t.dataset.hex).then(ok,ok)}catch(e){ok()}
 }));
 document.querySelectorAll('.vtile').forEach(v=>v.addEventListener('click',()=>{document.querySelector('.proj[data-id=mind]').click(); go(+v.dataset.go)}));
+
+/* ===== sound design (Web Audio, synthesised, off until the visitor turns it on) ===== */
+const SFX=(()=>{let ac=null,on=false,last=0;
+  try{on=localStorage.getItem('sfx')==='1'}catch(e){}
+  const ctx=()=>ac||(ac=new (window.AudioContext||window.webkitAudioContext)());
+  const tone=(f1,f2,dur,type='sine',vol=.05,delay=0)=>{if(!on)return; const c=ctx(),t=c.currentTime+delay,o=c.createOscillator(),g=c.createGain();
+    o.type=type;o.frequency.setValueAtTime(f1,t);o.frequency.exponentialRampToValueAtTime(f2,t+dur);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g).connect(c.destination);o.start(t);o.stop(t+dur+.02)};
+  const noise=(dur,from,to,vol=.06)=>{if(!on)return; const c=ctx(),t=c.currentTime,b=c.createBuffer(1,c.sampleRate*dur,c.sampleRate),d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1; const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();
+    s.buffer=b;f.type='bandpass';f.Q.value=1.2;f.frequency.setValueAtTime(from,t);f.frequency.exponentialRampToValueAtTime(to,t+dur);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.0001,t+dur);s.connect(f).connect(g).connect(c.destination);s.start(t)};
+  return{
+    get on(){return on},
+    set(v){on=v;try{localStorage.setItem('sfx',v?'1':'0')}catch(e){} if(v){ctx().resume(); tone(523,523,.18,'sine',.05);tone(784,784,.22,'sine',.045,.09);tone(1046,1046,.3,'sine',.04,.18)}},
+    hover(){const n=performance.now(); if(n-last<60)return; last=n; tone(2400,1800,.035,'sine',.018)},
+    click(){tone(680,320,.09,'triangle',.06)},
+    open(){noise(.45,400,3200,.05)}, close(){noise(.35,2600,300,.045)},
+    slide(){tone(1200,1500,.06,'sine',.03)}, copy(){tone(880,880,.07,'sine',.04);tone(1320,1320,.1,'sine',.035,.06)}
+  }})();
+const sb=document.getElementById('sndBtn');
+const syncSnd=()=>{sb.classList.toggle('on',SFX.on);sb.setAttribute('aria-pressed',SFX.on);sb.setAttribute('aria-label',SFX.on?'Couper les sons':'Activer les sons')};
+syncSnd(); sb.addEventListener('click',()=>{SFX.set(!SFX.on);syncSnd()});
+document.addEventListener('pointerenter',e=>{if(e.target.matches&&e.target.matches('a,button,.proj,.vtile,.tok'))SFX.hover()},true);
+document.addEventListener('click',e=>{const t=e.target.closest('a,button,.proj'); if(!t||t===sb)return;
+  if(t.id==='menuBtn') (document.getElementById('menu').classList.contains('open')?SFX.open():SFX.close());
+  else if(t.classList.contains('g-nav')||t.closest('.g-dots')) SFX.slide();
+  else if(t.classList.contains('tok')) SFX.copy();
+  else if(t.classList.contains('proj')||t.classList.contains('vtile')) SFX.open();
+  else SFX.click()});
+addEventListener('keydown',e=>{if(dlg.open&&(e.key==='ArrowRight'||e.key==='ArrowLeft'))SFX.slide()});
+
+/* ===== headings: words rise one by one ===== */
+document.querySelectorAll('.sec-head h2, .contact h2').forEach(h=>{
+  h.classList.add('split');
+  const walk=n=>{[...n.childNodes].forEach(c=>{
+    if(c.nodeType===3){const f=document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(w=>{if(!w)return; if(/^\s+$/.test(w)){f.append(w);return} const o=document.createElement('span');o.className='wd';const i=document.createElement('span');i.textContent=w;o.append(i);f.append(o)}); c.replaceWith(f)}
+    else if(c.nodeType===1&&c.tagName!=='BR') walk(c)})};
+  walk(h); h.querySelectorAll('.wd>span').forEach((s,i)=>s.style.transitionDelay=(i*70)+'ms');
+  if(RM) h.classList.add('in'); else io.observe(h);
+});
+
+/* ===== text decode on hover (labels and nav) ===== */
+const GLY='!<>-_\\/[]{}=+*^?#ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const scramble=el=>{if(el._sc)return; const fin=el.dataset.txt||(el.dataset.txt=el.textContent); let f=0; el._sc=1;
+  const tick=()=>{el.textContent=fin.split('').map((ch,i)=>i<f/2||ch===' '?ch:GLY[Math.random()*GLY.length|0]).join(''); f++; if(f/2<=fin.length) requestAnimationFrame(tick); else {el.textContent=fin; el._sc=0}}; tick()};
+if(!RM) document.querySelectorAll('.links a, .sec-head .mono, #menu li a').forEach(el=>{
+  const target=el.matches('#menu li a')?el:el; el.addEventListener('mouseenter',()=>{ if(el.children.length===0) scramble(el) })});
+
+/* ===== giant scene words drift with scroll ===== */
+if(!RM){const words=[...document.querySelectorAll('.scene .word')];
+  addEventListener('scroll',()=>{words.forEach(w=>{const r=w.closest('.proj').getBoundingClientRect(); const p=(r.top+r.height/2-innerHeight/2)/innerHeight; w.style.translate=`${p*-60}px 0`})},{passive:true});}
+
+/* ===== cursor spotlight on the dark sections ===== */
+if(FINE&&!RM){const sp=document.createElement('div'); sp.id='spot'; document.body.append(sp);
+  addEventListener('mousemove',e=>{sp.style.background=`radial-gradient(420px circle at ${e.clientX}px ${e.clientY}px, rgba(141,241,9,.07), transparent 70%)`},{passive:true});}
 
 /* 3D tilt + magnetic buttons (desktop only) */
 if(FINE&&!RM){
