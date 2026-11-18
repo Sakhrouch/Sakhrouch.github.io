@@ -1,0 +1,945 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aymen Sakhri — Designer UI/UX & Front-end</title>
+<meta name="description" content="Aymen Sakhri, designer UI/UX à Tunis : dashboards, e-commerce, VR, design system et intégration Angular.">
+<meta property="og:title" content="Aymen Sakhri — Designer UI/UX">
+<meta property="og:description" content="Des interfaces claires, pensées pour l'utilisateur. Du wireframe au code.">
+<link rel="icon" href="assets/avatar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#080A0C; --bg2:#0d1013; --card:#121619; --line:rgba(255,255,255,.08);
+  --text:#F2F5EF; --muted:#9ba3a0; --blue:#8DF109; --cyan:#C4FF68; --red:#ff5d6c; --green:#2fd58b; --amber:#ffb547;
+  --grad:linear-gradient(100deg,var(--blue),var(--cyan));
+  --display:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{width:min(1200px,100% - 40px);margin-inline:auto}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+::selection{background:var(--blue);color:#080A0C}
+
+/* grid canvas background */
+.canvas-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(700px 420px at 80% -5%,rgba(141,241,9,.22),transparent 70%),
+    radial-gradient(600px 400px at -10% 40%,rgba(196,255,104,.08),transparent 70%),
+    var(--bg)}
+.canvas-bg::after{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:48px 48px;opacity:.35;
+  -webkit-mask-image:radial-gradient(ellipse at 70% 10%,#000 0%,transparent 65%);mask-image:radial-gradient(ellipse at 70% 10%,#000 0%,transparent 65%)}
+
+/* nav */
+nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;width:min(1200px,100% - 28px);
+  display:flex;align-items:center;justify-content:space-between;padding:10px 12px 10px 14px;
+  background:rgba(12,15,18,.7);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:999px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:700;letter-spacing:.02em}
+.brand img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.links{display:flex;gap:4px}
+.links a{font-size:14px;color:var(--muted);padding:8px 14px;border-radius:999px;transition:.2s}
+.links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.btn{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:15px;padding:13px 22px;border-radius:999px;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;border:0;font-family:var(--body)}
+.btn-primary{background:var(--grad);color:#080A0C;box-shadow:0 10px 30px -10px rgba(141,241,9,.8)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -12px rgba(196,255,104,.8)}
+.btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.03)}
+.btn-ghost:hover{background:rgba(255,255,255,.08)}
+.btn-sm{padding:9px 16px;font-size:14px}
+.status{display:inline-flex;align-items:center;gap:8px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(47,213,139,.7);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(47,213,139,0)}100%{box-shadow:0 0 0 0 rgba(47,213,139,0)}}
+
+/* hero */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:40px;padding:130px 0 70px}
+.chip{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(141,241,9,.4);background:rgba(141,241,9,.1);padding:7px 14px;border-radius:999px;margin-bottom:26px}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(56px,9.5vw,138px);line-height:.9;letter-spacing:-.04em}
+h1 .outline{-webkit-text-stroke:2px var(--blue);color:transparent}
+.tagline{margin-top:26px;font-family:var(--display);font-size:clamp(20px,2.4vw,28px);font-weight:500;max-width:560px}
+.lead{margin-top:16px;color:var(--muted);max-width:520px;font-size:17px}
+.lead b{color:var(--text);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
+.hero-meta{display:flex;gap:28px;margin-top:44px;flex-wrap:wrap}
+.hero-meta div b{display:block;font-family:var(--display);font-size:30px;font-weight:700}
+
+/* hero visual: figma-like board */
+.board{position:relative;aspect-ratio:1/1.05;border-radius:28px;border:1px solid var(--line);background:linear-gradient(160deg,rgba(19,23,27,.9),rgba(8,10,12,.6));overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.board-top{display:flex;align-items:center;gap:7px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.board-top i{width:10px;height:10px;border-radius:50%;background:#2b3036}
+.board-top span{margin-left:10px}
+.frame{position:absolute;border-radius:16px;background:var(--card);border:1px solid rgba(255,255,255,.18);padding:14px;box-shadow:0 20px 40px -20px rgba(0,0,0,.7);transition:transform .25s ease-out}
+.frame .lbl{position:absolute;top:-22px;left:2px;font-family:var(--mono);font-size:11px;color:var(--blue)}
+.f1{left:7%;top:16%;width:62%;height:42%}
+.f2{right:6%;top:30%;width:38%;height:30%}
+.f3{left:12%;bottom:8%;width:50%;height:26%}
+.bars{display:flex;align-items:flex-end;gap:8px;height:62%;margin-top:12px}
+.bars i{flex:1;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,var(--blue),#4f8a00);transform-origin:bottom;animation:grow 1.4s cubic-bezier(.2,.8,.2,1) both}
+.bars i:nth-child(3){background:var(--grad)}
+@keyframes grow{from{transform:scaleY(0)}}
+.skel{height:8px;border-radius:4px;background:rgba(255,255,255,.12);margin-bottom:7px}
+.alert{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;background:rgba(255,255,255,.04);margin-bottom:7px;font-size:11px;font-family:var(--mono);color:var(--muted)}
+.alert b{width:9px;height:9px;border-radius:50%;flex:none}
+.cursor{position:absolute;z-index:5;pointer-events:none;animation:wander 9s ease-in-out infinite}
+.cursor svg{filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.cursor span{position:absolute;left:18px;top:16px;background:var(--blue);color:#080A0C;font-size:12px;font-weight:600;padding:3px 9px;border-radius:6px;white-space:nowrap}
+@keyframes wander{0%,100%{left:58%;top:52%}30%{left:30%;top:30%}60%{left:72%;top:70%}}
+.swatches{display:flex;gap:6px;margin-top:10px}
+.swatches i{width:26px;height:26px;border-radius:8px}
+
+/* marquee */
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:20px 0;background:rgba(12,15,18,.6)}
+.track{display:flex;gap:42px;width:max-content;animation:scroll 32s linear infinite}
+.track span{font-family:var(--display);font-size:clamp(22px,3vw,34px);font-weight:700;white-space:nowrap;display:flex;align-items:center;gap:42px}
+.track span::after{content:"✦";color:var(--blue);font-size:.7em}
+.track span:nth-child(even){-webkit-text-stroke:1px var(--muted);color:transparent}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* sections */
+section{padding:120px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:56px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--display);font-size:clamp(40px,6vw,80px);line-height:.95;letter-spacing:-.03em;margin-top:14px}
+.sec-head p{max-width:400px;color:var(--muted)}
+
+/* manifesto */
+.manifesto{font-family:var(--display);font-size:clamp(30px,4.6vw,62px);line-height:1.08;letter-spacing:-.02em;font-weight:500;max-width:1050px}
+.manifesto .w{opacity:.18;transition:opacity .4s}
+.manifesto .w.on{opacity:1}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:70px}
+.stat{border:1px solid var(--line);border-radius:20px;padding:24px;background:rgba(19,23,27,.5)}
+.stat b{display:block;font-family:var(--display);font-size:44px;line-height:1;margin-bottom:10px}
+
+/* projects */
+.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.proj{position:relative;border:1px solid var(--line);border-radius:26px;background:var(--bg2);overflow:hidden;cursor:pointer;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s;text-align:left;color:inherit;font:inherit}
+.proj:hover{transform:translateY(-6px);border-color:rgba(141,241,9,.5)}
+.proj:focus-visible{outline:2px solid var(--cyan);outline-offset:4px}
+.proj.big{grid-column:span 2}
+.visual{height:330px;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.proj.big .visual{height:400px}
+.proj-info{padding:24px 26px 26px;display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+.proj-info h3{font-family:var(--display);font-size:28px;line-height:1.1;margin:8px 0 6px}
+.proj-info p{color:var(--muted);font-size:15px}
+.arrow{flex:none;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:20px;transition:.3s}
+.proj:hover .arrow{background:var(--grad);color:#080A0C;transform:rotate(-45deg)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{font-size:12px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+/* project visuals (pure CSS mockups) */
+.v-bct{background:radial-gradient(500px 260px at 70% 0,rgba(141,241,9,.3),transparent),#0b0e11;padding:34px}
+.dash{display:grid;grid-template-columns:150px 1fr;gap:14px;height:100%;transition:transform .5s}
+.proj:hover .dash{transform:scale(1.02)}
+.side{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:14px}
+.side .skel:first-child{width:70%;background:var(--blue)}
+.main{display:grid;grid-template-rows:auto 1fr;gap:14px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.kpi{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px}
+.kpi b{font-family:var(--display);font-size:24px;display:block}
+.kpi small{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.panel{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.mini-bars{display:flex;align-items:flex-end;gap:6px;height:100%}
+.mini-bars i{flex:1;border-radius:4px 4px 1px 1px;background:linear-gradient(180deg,var(--blue),#3f6e00)}
+
+.v-shop{background:linear-gradient(135deg,#2a1408,#120904);padding:30px;display:grid;place-items:center}
+.shop{width:100%;max-width:520px;background:#fbf4ea;border-radius:16px;padding:16px;color:#3b2414;transition:transform .5s;box-shadow:0 30px 60px -30px #000}
+.proj:hover .shop{transform:rotate(-1.5deg) scale(1.03)}
+.shop-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--display);font-weight:700;margin-bottom:12px}
+.cart{position:relative;width:26px;height:22px;border:2px solid #3b2414;border-radius:3px 3px 6px 6px}
+.cart::after{content:"2";position:absolute;top:-10px;right:-10px;background:#c4572a;color:#fff;font-size:10px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.item .ph{aspect-ratio:1;border-radius:10px;margin-bottom:6px}
+.item .skel{background:rgba(59,36,20,.18)}
+.item .price{font-size:11px;font-weight:600;color:#c4572a}
+
+.v-mind{background:linear-gradient(160deg,#dff3ef,#e9e6fb);display:grid;place-items:center;padding:30px}
+.mind{width:min(300px,90%);background:#fff;border-radius:22px;padding:18px;color:#24324a;box-shadow:0 30px 50px -30px rgba(36,50,74,.5);transition:transform .5s}
+.proj:hover .mind{transform:translateY(-6px)}
+.mind h4{font-family:var(--display);font-size:17px;margin-bottom:12px}
+.moods{display:flex;gap:8px;margin-bottom:14px}
+.moods i{flex:1;aspect-ratio:1;border-radius:12px;display:grid;place-items:center;font-style:normal;font-size:20px;background:#f2f4f8}
+.moods i.sel{background:#cfe9e2;outline:2px solid #57b7a1}
+.mind .cta{background:#57b7a1;color:#fff;text-align:center;padding:10px;border-radius:12px;font-weight:600;font-size:13px}
+
+.v-vr{background:radial-gradient(circle at 50% 30%,#0f1a08,#05040f);perspective:600px;overflow:hidden}
+.floor{position:absolute;left:-50%;right:-50%;bottom:-40%;height:110%;transform:rotateX(70deg);
+  background-image:linear-gradient(rgba(196,255,104,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(196,255,104,.5) 1px,transparent 1px);background-size:44px 44px;
+  -webkit-mask-image:linear-gradient(to top,#000,transparent);mask-image:linear-gradient(to top,#000,transparent);animation:floor 4s linear infinite}
+@keyframes floor{to{background-position:0 44px}}
+.vpanel{position:absolute;border-radius:14px;border:1px solid rgba(196,255,104,.5);background:rgba(20,26,22,.45);backdrop-filter:blur(6px);box-shadow:0 0 30px rgba(196,255,104,.25)}
+.vp1{left:14%;top:20%;width:30%;height:42%;transform:rotateY(22deg)}
+.vp2{right:14%;top:16%;width:34%;height:48%;transform:rotateY(-22deg);padding:14px}
+.vp2 .skel{background:rgba(196,255,104,.4)}
+.vp1{padding:14px}
+.vp1 .play{width:40px;height:40px;border-radius:50%;background:var(--cyan);margin:20% auto 0;clip-path:polygon(30% 20%,30% 80%,80% 50%)}
+
+/* process */
+.process{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:s}
+.step{border:1px solid var(--line);border-radius:22px;padding:24px 20px;background:rgba(19,23,27,.45);transition:.3s;position:relative;min-height:230px}
+.step:hover{border-color:rgba(141,241,9,.6);background:rgba(141,241,9,.08);transform:translateY(-4px)}
+.step .n{font-family:var(--mono);color:var(--blue);font-size:13px}
+.step h3{font-family:var(--display);font-size:24px;margin:30px 0 10px}
+.step p{font-size:14px;color:var(--muted)}
+
+/* bento skills */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:180px;gap:16px}
+.cell{border:1px solid var(--line);border-radius:22px;padding:24px;background:rgba(19,23,27,.5);position:relative;overflow:hidden}
+.cell h3{font-family:var(--display);font-size:22px;margin:8px 0}
+.cell p{color:var(--muted);font-size:14px}
+.c-wide{grid-column:span 2}.c-tall{grid-row:span 2}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pill{font-size:13px;padding:7px 13px;border-radius:999px;background:rgba(141,241,9,.12);border:1px solid rgba(141,241,9,.3)}
+.big-num{font-family:var(--display);font-size:86px;font-weight:700;line-height:1}
+.glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(141,241,9,.45),transparent 70%);right:-60px;bottom:-60px}
+.code{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--muted);margin-top:12px}
+.code .k{color:var(--cyan)}.code .s{color:var(--amber)}.code .t{color:var(--blue)}
+
+/* timeline */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--blue),var(--cyan),transparent)}
+.tl{position:relative;padding:0 0 46px}
+.tl::before{content:"";position:absolute;left:-32px;top:8px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--blue)}
+.tl.hl::before{background:var(--cyan);border-color:var(--cyan);box-shadow:0 0 18px var(--cyan)}
+.tl .when{font-family:var(--mono);font-size:13px;color:var(--blue)}
+.tl h3{font-family:var(--display);font-size:26px;margin:4px 0}
+.tl p{color:var(--muted);max-width:640px}
+
+/* contact */
+.contact{text-align:center;padding:150px 0 110px}
+.contact h2{font-family:var(--display);font-size:clamp(46px,8.5vw,120px);line-height:.92;letter-spacing:-.04em;margin:20px 0 36px}
+.mail{display:inline-block;font-family:var(--display);font-size:clamp(20px,3vw,34px);border-bottom:2px solid var(--blue);padding-bottom:4px;transition:.3s;word-break:break-all}
+.mail:hover{color:var(--cyan);border-color:var(--cyan)}
+.socials{display:flex;justify-content:center;gap:12px;margin-top:40px;flex-wrap:wrap}
+footer{border-top:1px solid var(--line);padding:28px 0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+/* modal */
+dialog{border:0;padding:0;background:transparent;color:var(--text);max-width:min(880px,100% - 24px);width:100%;margin:auto}
+dialog::backdrop{background:rgba(8,10,12,.82);backdrop-filter:blur(6px)}
+.modal{background:var(--bg2);border:1px solid var(--line);border-radius:26px;overflow:hidden;max-height:88vh;overflow-y:auto}
+.modal .visual{height:260px}
+.modal-body{padding:30px 34px 36px}
+.modal-body h3{font-family:var(--display);font-size:clamp(30px,4vw,44px);line-height:1.05;margin:10px 0 14px}
+.meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+.meta div{border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.meta b{display:block;font-size:15px;margin-top:4px}
+.modal h4{font-family:var(--display);font-size:20px;margin:26px 0 10px}
+.modal ul{list-style:none;display:grid;gap:9px}
+.modal li{padding-left:24px;position:relative;color:#d5dbd2}
+.modal li::before{content:"→";position:absolute;left:0;color:var(--cyan)}
+.close{position:sticky;top:14px;float:right;margin:14px 14px 0 0;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(8,10,12,.8);color:var(--text);font-size:20px;cursor:pointer}
+.note{margin-top:24px;font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:12px 14px}
+
+/* device mockups */
+.stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:22px;padding:28px;
+  background:radial-gradient(520px 300px at 70% 10%,rgba(141,241,9,.35),transparent 70%),radial-gradient(400px 260px at 10% 100%,rgba(196,255,104,.18),transparent 70%),#0b0e11}
+.mock-browser{width:min(100%,640px);border-radius:12px;overflow:hidden;background:#121619;border:1px solid rgba(255,255,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.85);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.mb-bar{display:flex;align-items:center;gap:6px;padding:9px 12px;background:#171b1f;border-bottom:1px solid rgba(255,255,255,.12)}
+.mb-bar i{width:9px;height:9px;border-radius:50%;background:#ff5f57}.mb-bar i:nth-child(2){background:#febc2e}.mb-bar i:nth-child(3){background:#28c840}
+.mb-url{margin-left:10px;flex:1;max-width:260px;height:20px;border-radius:6px;background:#0d1013;font:11px var(--mono);color:var(--muted);display:flex;align-items:center;padding:0 10px;overflow:hidden;white-space:nowrap}
+.mb-screen{aspect-ratio:16/10;overflow:hidden;background:#fff}
+.mb-screen img{width:100%;height:auto;display:block;transition:transform 6s ease}
+.proj:hover .mock-browser{transform:translateY(-6px) scale(1.02)}
+.proj:hover .mb-screen img.tall{transform:translateY(calc(-100% + 100px))}
+.mock-phone{width:150px;flex:none;border-radius:28px;padding:7px;background:#080A0C;border:2px solid #2b3036;box-shadow:0 30px 60px -25px rgba(0,0,0,.9);position:relative;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.mock-phone::before{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:44px;height:12px;border-radius:8px;background:#080A0C;z-index:2}
+.mock-phone .ps{border-radius:21px;overflow:hidden;aspect-ratio:9/19.5;background:#fff}
+.mock-phone img{width:100%;height:100%;object-fit:cover;object-position:top}
+.proj:hover .mock-phone{transform:translateY(-10px) rotate(-2deg)}
+.proj.big .mock-phone{width:170px}
+.stage .mock-browser{height:84%;width:auto;aspect-ratio:16/11;max-width:68%;display:flex;flex-direction:column}
+.stage .mb-screen{flex:1;aspect-ratio:auto;min-height:0}
+.stage .mb-screen img{width:100%;height:100%;object-fit:cover;object-position:top;transition:object-position 5s ease}
+.proj:hover .stage .mb-screen img{object-position:bottom}
+.stage .mock-phone{height:84%;width:auto;aspect-ratio:9/19}
+.stage .mock-phone .ps{height:100%;aspect-ratio:auto}
+.mock-plain{width:min(100%,820px);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.22);box-shadow:0 30px 60px -25px rgba(0,0,0,.85)}
+.mock-plain img{width:100%;height:auto;display:block;max-height:62vh;object-fit:contain;background:#121619}
+.stage.phones{gap:26px}
+.stage.phones .mock-phone{height:90%}
+.stage.phones .mock-phone:nth-child(odd){transform:translateY(14px)}
+.proj:hover .stage.phones .mock-phone{transform:translateY(-8px)}
+@media (max-width:600px){.stage.phones .mock-phone:nth-child(n+3){display:none}}
+/* gallery */
+.gallery{position:relative;background:#0b0e11;border-bottom:1px solid var(--line)}
+.slides{display:flex;align-items:flex-start;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.slides-wrap{overflow:hidden;transition:height .4s ease}
+.slide{min-width:100%;padding:34px 30px 18px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.slide .mock-browser{width:min(100%,760px)}
+.slide .mb-screen{aspect-ratio:auto;max-height:62vh;overflow-y:auto}
+.slide .mock-phone{width:230px}
+.slide .mock-phone .ps{aspect-ratio:auto;max-height:60vh;overflow-y:auto}
+.slide .mock-phone img{height:auto;object-fit:initial}
+.slide figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:600px}
+.g-nav{position:absolute;top:45%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:rgba(8,10,12,.75);color:var(--text);font-size:18px;cursor:pointer;z-index:2}
+.g-prev{left:12px}.g-next{right:12px}
+.g-dots{display:flex;justify-content:center;gap:7px;padding:0 0 18px}
+.g-dots button{width:8px;height:8px;border-radius:99px;border:0;background:#2b3036;cursor:pointer;transition:.3s}
+.g-dots button.on{width:26px;background:var(--grad)}
+.cs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.cs-grid div{border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+.cs-grid p{color:#d5dbd2;font-size:15px;margin-top:6px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+@media (max-width:600px){.stage{padding:16px;gap:12px}.mock-phone{width:100px}.slide{padding:22px 14px 12px}.slide .mock-phone{width:190px}.cs-grid{grid-template-columns:1fr}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* custom cursor (desktop) */
+.dot-cursor{position:fixed;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--cyan);pointer-events:none;z-index:100;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;display:none}
+.dot-cursor.hover{width:64px;height:64px;background:rgba(196,255,104,.25)}
+@media (hover:hover) and (pointer:fine){.dot-cursor{display:block}}
+
+/* ===== creative layer ===== */
+:root{--sun:#E7FFC2}
+nav{z-index:95!important}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--sun));z-index:120}
+/* intro loader */
+#intro{position:fixed;inset:0;z-index:200;background:#080A0C;display:flex;flex-direction:column;justify-content:space-between;padding:26px 30px;transition:transform .9s cubic-bezier(.7,0,.2,1)}
+#intro.done{transform:translateY(-100%)}
+.intro-top,.intro-bot{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.intro-mid{text-align:center;position:relative}
+.intro-mid h2{font-family:var(--display);font-size:clamp(40px,8vw,120px);line-height:1;letter-spacing:-.03em;margin-top:14px}
+.iw{display:inline-block;opacity:0;transform:translateY(40px) rotate(4deg);animation:iw .8s cubic-bezier(.2,.8,.2,1) forwards}
+.iw:nth-child(2){animation-delay:.25s}.iw:nth-child(3){animation-delay:.5s}
+@keyframes iw{to{opacity:1;transform:none}}
+.ribbon{position:absolute;left:-5%;top:52%;width:110%;height:140px;transform:translateY(-50%);pointer-events:none;z-index:-1;overflow:visible}
+.ribbon path{fill:none;stroke-width:22;stroke-linecap:round;stroke-dasharray:1800;stroke-dashoffset:1800;animation:draw 2s .2s cubic-bezier(.6,0,.2,1) forwards;opacity:.85}
+@keyframes draw{to{stroke-dashoffset:0}}
+#count{font-family:var(--display);font-size:clamp(46px,7vw,84px);line-height:.9;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+#skip{background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:999px;cursor:pointer}
+/* hero waves */
+#waves{position:absolute;top:0;left:0;width:100%;height:100vh;z-index:-1;pointer-events:none;opacity:.9}
+body{position:relative}
+/* menu */
+.menu-btn{font-family:var(--mono);font-size:12px;letter-spacing:.14em;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:999px;cursor:pointer;margin-left:8px}
+.nav-right{display:flex;align-items:center}
+#menu{position:fixed;inset:0;z-index:90;background:rgba(8,10,12,.97);backdrop-filter:blur(10px);display:grid;grid-template-columns:1.4fr 1fr;gap:40px;padding:120px 6vw 50px;clip-path:circle(0% at calc(100% - 60px) 40px);transition:clip-path .8s cubic-bezier(.7,0,.2,1);pointer-events:none}
+#menu.open{clip-path:circle(150% at calc(100% - 60px) 40px);pointer-events:auto}
+#menu ol{list-style:none;counter-reset:m}
+#menu li{counter-increment:m;overflow:hidden}
+#menu li a{display:flex;align-items:baseline;gap:18px;font-family:var(--display);font-size:clamp(38px,6.5vw,86px);line-height:1.08;letter-spacing:-.03em;transform:translateY(110%);transition:transform .7s cubic-bezier(.2,.8,.2,1),color .3s}
+#menu li a::before{content:"0" counter(m);font-family:var(--mono);font-size:14px;color:var(--cyan);letter-spacing:.1em}
+#menu.open li a{transform:none}
+#menu li:nth-child(2) a{transition-delay:.06s}#menu li:nth-child(3) a{transition-delay:.12s}#menu li:nth-child(4) a{transition-delay:.18s}#menu li:nth-child(5) a{transition-delay:.24s}#menu li:nth-child(6) a{transition-delay:.3s}
+#menu li a:hover{color:var(--sun);padding-left:10px}
+.menu-side{align-self:end;display:grid;gap:26px}
+.menu-side a.mail{font-size:clamp(18px,2vw,26px)}
+/* signal sentence with image pills */
+.signal{font-family:var(--display);font-size:clamp(32px,5.2vw,74px);line-height:1.15;letter-spacing:-.03em;font-weight:500;max-width:1150px}
+.signal .soft{color:var(--muted)}
+.pill-img{display:inline-block;vertical-align:middle;width:1.9em;height:.92em;border-radius:999px;overflow:hidden;border:2px solid rgba(255,255,255,.35);margin:0 .12em;transition:width .5s cubic-bezier(.2,.8,.2,1),border-color .3s;position:relative;top:-.06em}
+.pill-img img{width:100%;height:100%;object-fit:cover}
+.pill-img:hover{width:3.2em;border-color:var(--sun)}
+.pill-code{display:inline-grid;place-items:center;vertical-align:middle;width:1.9em;height:.92em;border-radius:999px;background:var(--grad);color:#080A0C;font-family:var(--mono);font-size:.38em;font-weight:500;margin:0 .12em;position:relative;top:-.06em;transition:width .5s}
+.pill-code:hover{width:3em}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:60px}
+.svc{border:1px solid var(--line);border-radius:22px;padding:26px;background:rgba(19,23,27,.5);position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.svc::after{content:"";position:absolute;inset:auto -40% -60% auto;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(141,241,9,.35),transparent 70%);opacity:0;transition:opacity .4s}
+.svc:hover{border-color:rgba(141,241,9,.55);transform:translateY(-4px)}.svc:hover::after{opacity:1}
+.svc h3{font-family:var(--display);font-size:26px;line-height:1.15;margin:34px 0 10px}
+.svc p{color:var(--muted);font-size:15px}
+.svc .ic{position:absolute;top:22px;right:22px;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(141,241,9,.12);color:var(--sun);font-size:18px}
+/* brand vault */
+.vault{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px}
+.vpanel-l{border:1px solid var(--line);border-radius:26px;padding:28px;background:rgba(19,23,27,.5);display:grid;gap:26px;align-content:start}
+.vpanel-l h3{font-family:var(--display);font-size:30px;line-height:1.1}
+.tokens{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tok{border-radius:16px;padding:12px;min-height:110px;display:flex;flex-direction:column;justify-content:flex-end;cursor:pointer;border:1px solid rgba(255,255,255,.08);transition:transform .25s;font-family:var(--mono);font-size:11px;position:relative;color:inherit;text-align:left}
+.tok:hover{transform:translateY(-4px)}
+.tok b{font-family:var(--body);font-size:13px;font-weight:600;letter-spacing:0}
+.tok .copied{position:absolute;top:10px;right:10px;font-size:10px;opacity:0;transition:.3s}
+.tok.ok .copied{opacity:1}
+.spec{display:flex;align-items:center;gap:20px;border-top:1px solid var(--line);padding-top:22px}
+.spec .aa{font-family:var(--display);font-size:72px;line-height:1;background:linear-gradient(120deg,var(--sun),#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:170px;gap:14px;perspective:900px}
+.vtile{border-radius:18px;overflow:hidden;border:1px solid var(--line);position:relative;cursor:pointer;transition:transform .2s ease-out,box-shadow .3s;transform-style:preserve-3d;background:#121619;padding:0;font:inherit;color:inherit}
+.vtile img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.vtile:hover img{transform:scale(1.07)}
+.vtile span{position:absolute;left:10px;bottom:10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:rgba(8,10,12,.7);padding:5px 9px;border-radius:999px;color:var(--text)}
+.vtile.w2{grid-column:span 2}.vtile.h2{grid-row:span 2}
+.vtile:hover{box-shadow:0 26px 50px -24px rgba(141,241,9,.7)}
+/* projects as alternating rows, ordered by strength */
+.projects{grid-template-columns:1fr;gap:28px}
+.proj,.proj.big{grid-column:auto;display:grid;grid-template-columns:1.35fr 1fr}
+.proj .visual,.proj.big .visual{height:460px;border-bottom:0;border-right:1px solid var(--line)}
+.proj .proj-info{flex-direction:column;align-items:flex-start;justify-content:center;gap:26px;padding:44px 40px;position:relative}
+.proj .proj-info h3{font-size:clamp(30px,3.2vw,46px);margin:12px 0 10px}
+.proj .proj-info p{font-size:16px}
+.proj .proj-info::before{position:absolute;top:26px;right:32px;font-family:var(--display);font-size:64px;font-weight:700;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.28)}
+.proj[data-id=mind]{order:1}.proj[data-id=vr]{order:2}.proj[data-id=rouh]{order:3}.proj[data-id=bct]{order:4}.proj[data-id=makina]{order:5}
+.proj[data-id=mind] .proj-info::before{content:"01"}.proj[data-id=vr] .proj-info::before{content:"02"}.proj[data-id=rouh] .proj-info::before{content:"03"}.proj[data-id=bct] .proj-info::before{content:"04"}.proj[data-id=makina] .proj-info::before{content:"05"}
+.proj[data-id=vr] .visual,.proj[data-id=bct] .visual{order:2;border-right:0;border-left:1px solid var(--line)}
+.proj .stage .mock-browser{max-width:88%}
+.proj .stage.phones{gap:18px}.proj .stage.phones .mock-phone{height:78%}
+.proj .proj-info>div>.mono:first-child{display:block;padding-right:76px}
+@media (max-width:960px){
+  .proj,.proj.big{grid-template-columns:1fr}
+  .proj .visual,.proj.big .visual{height:320px;border-right:0;border-left:0;border-bottom:1px solid var(--line);order:0!important}
+  .proj .proj-info{padding:26px 24px 28px}
+  .proj .proj-info::before{font-size:44px;top:20px;right:22px}
+  .proj .proj-info>div>.mono:first-child{padding-right:60px}
+  .proj .stage.phones .mock-phone{height:72%}
+  .stage.phones .mock-phone:nth-child(n+3){display:none}
+}
+@media (max-width:600px){.proj .visual,.proj.big .visual{height:250px}.bento .c-tall{min-height:0}}
+/* role badges (UI/UX + Angular) */
+.roles{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:26px}
+.role-pill{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04)}
+.role-pill b{color:var(--blue)}
+.role-pill.ng{background:var(--blue);color:#080A0C;border-color:var(--blue)}
+.role-plus{color:var(--muted);font-family:var(--mono)}
+.roles + .tagline{margin-top:18px}
+.cell .big-num{font-size:clamp(38px,3.6vw,54px);overflow-wrap:anywhere}
+.bento .c-tall{grid-row:span 2;min-height:420px}
+.bento{grid-auto-rows:minmax(180px,auto)}
+/* magnetic */
+.mag{transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+
+@media (max-width:960px){
+  .hero{grid-template-columns:1fr;padding-top:120px}
+  .board{max-width:520px;width:100%}
+  .links{display:none}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .projects{grid-template-columns:1fr}.proj.big{grid-column:auto}
+  .process{grid-template-columns:1fr 1fr}
+  .bento{grid-template-columns:1fr 1fr}
+  .c-wide{grid-column:span 2}
+  .services{grid-template-columns:1fr}
+  .vault{grid-template-columns:1fr}
+  #menu{grid-template-columns:1fr;padding-top:110px}
+}
+@media (max-width:600px){
+  .vgrid{grid-template-columns:1fr 1fr;grid-auto-rows:130px}
+  .vtile.w2{grid-column:span 2}
+  .tokens{grid-template-columns:repeat(2,1fr)}
+  #intro{padding:20px 16px}
+  .intro-top span:last-child{display:none}
+  .menu-btn{padding:9px 12px}
+}
+@media (max-width:600px){
+  .wrap{width:calc(100% - 32px)}
+  section{padding:80px 0}
+  .visual,.proj.big .visual{height:250px}
+  .v-bct{padding:16px}.dash{grid-template-columns:1fr}.side{display:none}
+  .process{grid-template-columns:1fr}.step{min-height:0}
+  .bento{grid-template-columns:1fr;grid-auto-rows:auto}.c-wide,.c-tall{grid-column:auto;grid-row:auto}
+  .meta{grid-template-columns:1fr}
+  .modal-body{padding:24px 20px 28px}
+  .hero-meta{gap:18px}.hero-meta div b{font-size:24px}
+  .stats{gap:10px}.stat{padding:16px;min-width:0}.stat b{font-size:28px;overflow-wrap:anywhere}
+  nav .btn-sm span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="intro" aria-hidden="true">
+  <div class="intro-top mono"><span>Aymen Sakhri · Portfolio 2026</span><span>Tunis · UI/UX · Front-end</span></div>
+  <div class="intro-mid">
+    <p class="mono">Connexion au signal…</p>
+    <svg class="ribbon" viewBox="0 0 1200 140" preserveAspectRatio="none"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#8DF109"/><stop offset=".55" stop-color="#C4FF68"/><stop offset="1" stop-color="#E7FFC2"/></linearGradient></defs><path stroke="url(#rg)" d="M0,110 C200,10 380,130 600,70 S1000,0 1200,40"/></svg>
+    <h2><span class="iw">CLAIR.</span> <span class="iw">UTILE.</span> <span class="iw grad">HUMAIN.</span></h2>
+  </div>
+  <div class="intro-bot"><div><b id="count">000</b><span class="mono"> %</span></div><button id="skip" class="mono">Passer l'intro ↗</button></div>
+</div>
+<div id="progress"></div>
+<div class="canvas-bg"></div>
+<canvas id="waves"></canvas>
+<div class="dot-cursor" id="cur"></div>
+
+<nav>
+  <a href="#top" class="brand"><img src="assets/avatar.png" alt="Aymen Sakhri">AYMEN<span class="grad">.</span></a>
+  <div class="links">
+    <a href="#work">Projets</a><a href="#vault">Identité</a><a href="#process">Méthode</a><a href="#path">Parcours</a>
+  </div>
+  <div class="nav-right">
+    <a href="#contact" class="btn btn-primary btn-sm mag">Me contacter <span>↗</span></a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu">MENU +</button>
+  </div>
+</nav>
+
+<div id="menu" role="dialog" aria-label="Menu">
+  <ol>
+    <li><a href="#top">Accueil</a></li>
+    <li><a href="#work">Projets</a></li>
+    <li><a href="#vault">Identité NOVA</a></li>
+    <li><a href="#process">Méthode</a></li>
+    <li><a href="#path">Parcours</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ol>
+  <div class="menu-side">
+    <p class="mono">Écrire</p>
+    <a class="mail" href="mailto:aymensakhri315@gmail.com">aymensakhri315@gmail.com</a>
+    <p class="mono">Ailleurs</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <a class="btn btn-ghost btn-sm" href="https://www.linkedin.com/in/aymen-sakhri-87070823b" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn btn-ghost btn-sm" href="https://www.behance.net/Aymensakhri" target="_blank" rel="noopener">Behance ↗</a>
+      <a class="btn btn-ghost btn-sm" href="https://github.com/Sakhrouch" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn btn-primary btn-sm" href="assets/CV-Aymen-Sakhri.pdf" download>CV ↓</a>
+    </div>
+  </div>
+</div>
+
+<main id="top">
+<!-- HERO -->
+<header class="wrap hero">
+  <div>
+    <div class="chip mono"><span class="pulse"></span> Disponible · Sur site & remote</div>
+    <h1>AYMEN<br><span class="outline">SAKHRI</span></h1>
+    <div class="roles"><span class="role-pill"><b>◐</b> Designer UI/UX</span><span class="role-plus">+</span><span class="role-pill ng"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12 2 3 5.2l1.4 11.9L12 22l7.6-4.9L21 5.2 12 2Zm0 2.2 5.6 12.5h-2.1l-1.1-2.8H9.6l-1.1 2.8H6.4L12 4.2Zm0 4.1-1.7 4.1h3.4L12 8.3Z"/></svg> Développeur Angular</span></div>
+    <p class="tagline">Des interfaces qui se comprennent <span class="grad">en un coup d'œil.</span></p>
+    <p class="lead">Je conçois des interfaces sur <b>Figma</b> puis je les code moi-même en <b>Angular</b>. Je transforme des besoins complexes (supervision bancaire, e-commerce, VR) en produits clairs, du wireframe jusqu'au code.</p>
+    <div class="ctas">
+      <a href="#work" class="btn btn-primary">Voir les projets ↘</a>
+      <a href="assets/CV-Aymen-Sakhri.pdf" download class="btn btn-ghost">Télécharger le CV ↓</a>
+    </div>
+    <div class="hero-meta">
+      <div><b>5</b><span class="mono">projets UI/UX</span></div>
+      <div><b>BCT</b><span class="mono">stage PFE 2026</span></div>
+      <div><b>TB</b><span class="mono">mention, ISAMM</span></div>
+      <div><b class="grad">NG</b><span class="mono">Angular, en production</span></div>
+    </div>
+  </div>
+
+  <div class="board reveal" id="board" aria-hidden="true">
+    <div class="board-top"><i></i><i></i><i></i><span class="mono">aymen-sakhri.fig</span></div>
+    <div class="frame f1" data-depth="18"><span class="lbl">Dashboard / Supervision</span>
+      <div class="skel" style="width:40%"></div><div class="skel" style="width:24%;opacity:.5"></div>
+      <div class="bars"><i style="height:45%"></i><i style="height:70%;animation-delay:.1s"></i><i style="height:100%;animation-delay:.2s"></i><i style="height:58%;animation-delay:.3s"></i><i style="height:80%;animation-delay:.4s"></i><i style="height:50%;animation-delay:.5s"></i></div>
+    </div>
+    <div class="frame f2" data-depth="30"><span class="lbl">Alertes</span>
+      <div class="alert"><b style="background:var(--red);box-shadow:0 0 10px var(--red)"></b>CRITIQUE · srv-02</div>
+      <div class="alert"><b style="background:var(--amber)"></b>WARNING · app-api</div>
+      <div class="alert"><b style="background:var(--green)"></b>OK · srv-01</div>
+    </div>
+    <div class="frame f3" data-depth="12"><span class="lbl">Design tokens</span>
+      <div class="skel" style="width:50%"></div>
+      <div class="swatches"><i style="background:var(--blue)"></i><i style="background:var(--cyan)"></i><i style="background:var(--red)"></i><i style="background:var(--green)"></i><i style="background:#F2F5EF"></i></div>
+    </div>
+    <div class="cursor"><svg width="20" height="22" viewBox="0 0 20 22"><path d="M1 1l17 8-7 2-3 8z" fill="#fff" stroke="#080A0C" stroke-width="1.5"/></svg><span>Aymen</span></div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>UI DESIGN</span><span>UX RESEARCH</span><span>DESIGN SYSTEM</span><span>DASHBOARDS</span><span>PROTOTYPAGE</span><span>ANGULAR</span><span>INTERFACES VR</span><span>IDENTITÉ VISUELLE</span>
+  <span>UI DESIGN</span><span>UX RESEARCH</span><span>DESIGN SYSTEM</span><span>DASHBOARDS</span><span>PROTOTYPAGE</span><span>ANGULAR</span><span>INTERFACES VR</span><span>IDENTITÉ VISUELLE</span>
+</div></div>
+
+<!-- SIGNAL -->
+<section class="wrap" id="signal">
+  <p class="mono reveal">00 / Le signal</p>
+  <p class="signal reveal" style="margin-top:26px">Je conçois des <span class="pill-img"><img src="assets/projects/event-2.png" alt=""></span> interfaces claires, <span class="soft">des</span> <span class="pill-img"><img src="assets/projects/nova-affiche-1.webp" alt=""></span> marques qui parlent <span class="soft">et du</span> <span class="pill-code">&lt;/&gt;</span> code propre.</p>
+  <div class="services">
+    <div class="svc reveal"><span class="ic">◐</span><span class="mono">01 / UX & UI</span><h3>Des interfaces qui se comprennent.</h3><p>Recherche, parcours, wireframes et prototypes Figma, jusqu'au design system.</p></div>
+    <div class="svc reveal"><span class="ic">✦</span><span class="mono">02 / Marque & visuel</span><h3>Une identité qui se retient.</h3><p>Logos, chartes graphiques, affiches et campagnes, du concept au fichier final.</p></div>
+    <div class="svc reveal"><span class="ic">&lt;/&gt;</span><span class="mono">03 / Front-end</span><h3>Du design au code, sans perte.</h3><p>Intégration responsive en Angular, HTML et CSS, fidèle à la maquette.</p></div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="wrap" id="about" style="padding-top:20px">
+  <p class="mono reveal">— Manifeste</p>
+  <p class="manifesto" id="manifesto" style="margin-top:26px">Une bonne interface ne se remarque pas. Elle montre l'information critique au bon moment, guide sans expliquer, et reste cohérente du premier écran à la dernière ligne de code.</p>
+</section>
+
+<!-- WORK -->
+<section class="wrap" id="work">
+  <div class="sec-head">
+    <div><p class="mono">01 / Projets sélectionnés</p><h2 class="reveal">Du problème<br><span class="grad">à l'interface.</span></h2></div>
+    <p class="reveal">Cinq projets, cinq contextes : le bien-être étudiant, l'événementiel, le commerce, la supervision bancaire et la location. Cliquez sur un projet pour lire son étude de cas.</p>
+  </div>
+
+  <div class="projects">
+    <button class="proj big reveal" data-id="bct">
+      <div class="visual v-bct"><div class="dash">
+        <div class="side"><div class="skel"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:60%"></div><div class="skel" style="width:75%"></div><div class="skel" style="width:50%"></div></div>
+        <div class="main">
+          <div class="kpis">
+            <div class="kpi"><small>SERVEURS</small><b>24</b></div>
+            <div class="kpi"><small>ALERTES</small><b style="color:var(--red)">3</b></div>
+            <div class="kpi"><small>DISPONIBILITÉ</small><b style="color:var(--green)">OK</b></div>
+          </div>
+          <div class="panel">
+            <div class="mini-bars"><i style="height:40%"></i><i style="height:62%"></i><i style="height:48%"></i><i style="height:90%;background:var(--grad)"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:76%"></i></div>
+            <div>
+              <div class="alert"><b style="background:var(--red);box-shadow:0 0 10px var(--red)"></b>CRITIQUE</div>
+              <div class="alert"><b style="background:var(--amber)"></b>WARNING</div>
+              <div class="alert"><b style="background:var(--green)"></b>RÉSOLU</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+      <div class="proj-info">
+        <div><span class="mono">Fintech · Supervision · Stage PFE 2026</span><h3>Banque Centrale de Tunisie</h3><p>Plateforme de supervision et d'alertes pour serveurs et applications.</p>
+          <div class="tags"><span class="tag">UI/UX</span><span class="tag">Dashboard</span><span class="tag">Design system</span><span class="tag">Angular</span></div></div>
+        <span class="arrow">→</span>
+      </div>
+    </button>
+
+    <button class="proj reveal" data-id="rouh">
+      <div class="visual v-shop"><div class="shop">
+        <div class="shop-top">Rouh El Herfa<span class="cart"></span></div>
+        <div class="grid3">
+          <div class="item"><div class="ph" style="background:linear-gradient(135deg,#c4572a,#e8a15b)"></div><div class="skel"></div><span class="price">45 DT</span></div>
+          <div class="item"><div class="ph" style="background:linear-gradient(135deg,#2d6a77,#7bb6b9)"></div><div class="skel"></div><span class="price">80 DT</span></div>
+          <div class="item"><div class="ph" style="background:linear-gradient(135deg,#d9b56a,#f1dfae)"></div><div class="skel"></div><span class="price">32 DT</span></div>
+        </div>
+      </div></div>
+      <div class="proj-info">
+        <div><span class="mono">E-commerce · Web · 2025</span><h3>Rouh El Herfa</h3><p>Un site e-commerce qui raconte l'artisanat tunisien avant de le vendre.</p>
+          <div class="tags"><span class="tag">E-commerce</span><span class="tag">Parcours d'achat</span><span class="tag">Identité arabe</span></div></div>
+        <span class="arrow">→</span>
+      </div>
+    </button>
+
+    <button class="proj reveal" data-id="mind">
+      <div class="visual v-mind"><div class="mind">
+        <h4>Comment te sens-tu aujourd'hui ?</h4>
+        <div class="moods"><i>😔</i><i>😐</i><i class="sel">🙂</i><i>😄</i></div>
+        <div class="skel" style="background:#eef1f5"></div><div class="skel" style="width:70%;background:#eef1f5"></div>
+        <div class="cta" style="margin-top:12px">Parler à quelqu'un</div>
+      </div></div>
+      <div class="proj-info">
+        <div><span class="mono">Santé · Web + marque · PFA 2025–2026</span><h3>NOVA, santé mentale étudiante</h3><p>Un site, une marque et une campagne pour briser le tabou.</p>
+          <div class="tags"><span class="tag">Recherche</span><span class="tag">Site web</span><span class="tag">Identité</span><span class="tag">Campagne</span></div></div>
+        <span class="arrow">→</span>
+      </div>
+    </button>
+
+    <button class="proj big reveal" data-id="vr">
+      <div class="visual v-vr"><div class="floor"></div>
+        <div class="vpanel vp1"><div class="skel" style="background:rgba(196,255,104,.4);width:60%"></div><div class="play"></div></div>
+        <div class="vpanel vp2"><div class="skel" style="width:70%"></div><div class="skel" style="width:50%"></div><div class="skel" style="width:80%"></div><div class="skel" style="width:40%"></div></div>
+      </div>
+      <div class="proj-info">
+        <div><span class="mono">App mobile · AR · 2023</span><h3>Gabès Margoum, l'événement augmenté</h3><p>Billetterie, NFC et réalité augmentée pour vivre l'artisanat de Gabès.</p>
+          <div class="tags"><span class="tag">UI mobile</span><span class="tag">Réalité augmentée</span><span class="tag">Billetterie</span><span class="tag">NFC</span></div></div>
+        <span class="arrow">→</span>
+      </div>
+    </button>
+
+    <button class="proj big reveal" data-id="makina">
+      <div class="visual" style="background:#0b0e11"></div>
+      <div class="proj-info">
+        <div><span class="mono">Location · Web · 2026 · <span style="color:var(--sun)">En cours</span></span><h3>Makina</h3><p>Louer engins, camions, caravanes et matériel agricole partout en Tunisie.</p>
+          <div class="tags"><span class="tag">UI web</span><span class="tag">Direction artistique</span><span class="tag">Marketplace</span></div></div>
+        <span class="arrow">→</span>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- BRAND VAULT -->
+<section class="wrap" id="vault">
+  <div class="sec-head">
+    <div><p class="mono">02 / Coffre d'identité · NOVA</p><h2 class="reveal">Une marque,<br><span class="grad">de la grille au mur.</span></h2></div>
+    <p class="reveal">Couleurs, typographie et déclinaisons : comment l'identité NOVA tient du logo jusqu'à l'affiche. Cliquez sur une couleur pour copier son code, ou sur une image pour l'ouvrir.</p>
+  </div>
+  <div class="vault">
+    <div class="vpanel-l reveal">
+      <div><span class="mono">Palette</span><h3 style="margin-top:8px">Calme, confiance, lumière.</h3></div>
+      <div class="tokens">
+        <button class="tok" data-hex="#0B0B8A" style="background:#0B0B8A;color:#fff"><span class="copied">Copié ✓</span><b>Nuit</b>#0B0B8A</button>
+        <button class="tok" data-hex="#2E3A8F" style="background:#2E3A8F;color:#fff"><span class="copied">Copié ✓</span><b>Royal</b>#2E3A8F</button>
+        <button class="tok" data-hex="#2B2BFF" style="background:#2B2BFF;color:#fff"><span class="copied">Copié ✓</span><b>Électrique</b>#2B2BFF</button>
+        <button class="tok" data-hex="#F6CF6E" style="background:#F6CF6E;color:#1c0040"><span class="copied">Copié ✓</span><b>Étoile</b>#F6CF6E</button>
+        <button class="tok" data-hex="#E3D8EC" style="background:#E3D8EC;color:#1c0040"><span class="copied">Copié ✓</span><b>Lavande</b>#E3D8EC</button>
+        <button class="tok" data-hex="#1C0040" style="background:#1C0040;color:#fff"><span class="copied">Copié ✓</span><b>Prune</b>#1C0040</button>
+      </div>
+      <div class="spec"><span class="aa">Aa</span><div><span class="mono">Typographie</span><p style="margin-top:6px;color:#d5dbd2">Un wordmark serif aux courbes fluides, une sans-serif ronde et lisible pour l'interface.</p></div></div>
+      <p class="mono" style="color:var(--sun)">« Prends soin de ton mental, une étoile à la fois. »</p>
+    </div>
+    <div class="vgrid">
+      <button class="vtile w2" data-go="5"><img src="assets/projects/nova-wordmark.png" alt="Wordmark NOVA" loading="lazy"><span>Wordmark</span></button>
+      <button class="vtile h2" data-go="3"><img src="assets/projects/nova-crise.png" alt="Page de crise NOVA" loading="lazy" style="object-position:left"><span>Interface</span></button>
+      <button class="vtile" data-go="6"><img src="assets/projects/nova-icone.png" alt="Icône NOVA" loading="lazy"><span>Icône</span></button>
+      <button class="vtile" data-go="9"><img src="assets/projects/nova-affiche-3.webp" alt="Série d'affiches NOVA" loading="lazy"><span>Série</span></button>
+      <button class="vtile w2" data-go="7"><img src="assets/projects/nova-affiche-1.webp" alt="Campagne NOVA" loading="lazy"><span>Campagne</span></button>
+      <button class="vtile" data-go="8"><img src="assets/projects/nova-affiche-2.webp" alt="Les murs de silence" loading="lazy"><span>Affichage</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="wrap" id="process">
+  <div class="sec-head">
+    <div><p class="mono">03 / Méthode</p><h2 class="reveal">Comment<br><span class="grad">je travaille.</span></h2></div>
+    <p class="reveal">Un processus simple et répétable, appliqué sur chaque projet, du besoin flou jusqu'à l'écran intégré.</p>
+  </div>
+  <div class="process">
+    <div class="step reveal"><span class="n">01</span><h3>Comprendre</h3><p>Échanges avec les utilisateurs et l'équipe, questionnaires, contraintes métier.</p></div>
+    <div class="step reveal"><span class="n">02</span><h3>Structurer</h3><p>Personas, user flows, arborescence : ce qui compte, et dans quel ordre.</p></div>
+    <div class="step reveal"><span class="n">03</span><h3>Concevoir</h3><p>Wireframes puis maquettes haute fidélité, hiérarchie visuelle claire.</p></div>
+    <div class="step reveal"><span class="n">04</span><h3>Prototyper</h3><p>Prototypes interactifs Figma, retours, itérations, composants réutilisables.</p></div>
+    <div class="step reveal"><span class="n">05</span><h3>Intégrer</h3><p>Handoff via Dev Mode et intégration responsive en Angular.</p></div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="wrap" id="skills">
+  <div class="sec-head">
+    <div><p class="mono">04 / Compétences</p><h2 class="reveal">Design <span class="grad">+</span><br>code.</h2></div>
+    <p class="reveal">Je parle aussi bien aux utilisateurs qu'aux développeurs, et c'est ce qui rend le handoff simple.</p>
+  </div>
+  <div class="bento">
+    <div class="cell c-wide c-tall reveal"><p class="mono">UX / UI</p><h3>Du besoin à la maquette</h3><p>Recherche utilisateur, personas, user flows, customer journey, wireframing, prototypage, design system, accessibilité WCAG.</p>
+      <div class="pills"><span class="pill">Personas</span><span class="pill">User flows</span><span class="pill">Wireframes</span><span class="pill">Prototypes</span><span class="pill">Design system</span><span class="pill">Dashboards</span><span class="pill">Mobile-first</span><span class="pill">WCAG</span></div><div class="glow"></div></div>
+    <div class="cell c-tall reveal"><p class="mono">Outil n°1</p><div class="big-num grad">Figma</div><p>Wireframes, prototypes interactifs et design system, prêts pour le développement.</p><div class="pills"><span class="pill">Auto Layout</span><span class="pill">Variantes</span><span class="pill">Prototypes</span><span class="pill">Dev Mode</span></div></div>
+    <div class="cell c-tall reveal"><p class="mono">Front-end</p><div class="big-num grad">Angular</div><p>Je ne m'arrête pas à la maquette : je code mes propres interfaces, composant par composant.</p>
+      <div class="code"><span style="opacity:.6">// server.service.ts · BCT</span><br><span class="k">@Injectable</span>({ providedIn: <span class="s">'root'</span> })<br><span class="k">export class</span> <span class="t">ServerService</span> {<br>&nbsp;&nbsp;getAllServers(): <span class="t">Observable</span>&lt;ServerItem[]&gt; {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="k">return</span> of(this.servers);<br>&nbsp;&nbsp;}<br>}</div>
+      <a class="btn btn-ghost btn-sm" style="margin-top:14px" href="https://github.com/Sakhrouch/bank-supervision-ui" target="_blank" rel="noopener">Voir le code sur GitHub ↗</a>
+      <div class="pills"><span class="pill">Angular</span><span class="pill">TypeScript</span><span class="pill">HTML5</span><span class="pill">CSS3</span><span class="pill">Bootstrap</span><span class="pill">Responsive</span></div></div>
+    <div class="cell c-wide reveal"><p class="mono">Graphisme</p><h3>Identité visuelle & print</h3><p>Logos, chartes, affiches et contenus pour réseaux sociaux.</p>
+      <div class="pills"><span class="pill">Photoshop</span><span class="pill">Illustrator</span><span class="pill">Affinity</span><span class="pill">Adobe XD</span></div></div>
+    <div class="cell c-wide reveal"><p class="mono">Langues</p><h3>Arabe · Français · Anglais</h3><p>Natif · Professionnel · Intermédiaire</p></div>
+  </div>
+</section>
+
+<!-- PATH -->
+<section class="wrap" id="path">
+  <div class="sec-head">
+    <div><p class="mono">05 / Parcours</p><h2 class="reveal">D'où<br><span class="grad">je viens.</span></h2></div>
+  </div>
+  <div class="timeline">
+    <div class="tl hl reveal"><span class="when">Juin 2026</span><h3>Licence en Communication Multimédia, mention Très Bien</h3><p>Institut Supérieur des Arts Multimédia de la Manouba (ISAMM).</p></div>
+    <div class="tl reveal"><span class="when">Fév. → Mai 2026</span><h3>Designer UI/UX & Front-end, stage PFE</h3><p>Banque Centrale de Tunisie : plateforme de supervision et d'alertes, de la maquette Figma à l'intégration Angular.</p></div>
+    <div class="tl reveal"><span class="when">2025 → 2026</span><h3>PFA, NOVA : santé mentale des étudiants</h3><p>Site web, identité de marque et campagne d'affichage, en équipe de 3.</p></div>
+    <div class="tl reveal"><span class="when">2025</span><h3>Rouh El Herfa, e-commerce d'artisanat</h3><p>Design du parcours d'achat complet.</p></div>
+    <div class="tl reveal"><span class="when">2023</span><h3>Gabès Margoum, application événementielle AR</h3><p>Billetterie mobile, NFC et navigation en réalité augmentée.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="wrap contact" id="contact">
+  <p class="mono"><span class="status"><span class="pulse"></span> 06 / Contact · Disponible sur site (Tunisie) et en remote</span></p>
+  <h2 class="reveal">Un produit<br>à rendre <span class="grad">clair ?</span></h2>
+  <a class="mail" href="mailto:aymensakhri315@gmail.com">aymensakhri315@gmail.com</a>
+  <div class="socials">
+    <a class="btn btn-ghost" href="https://www.linkedin.com/in/aymen-sakhri-87070823b" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <a class="btn btn-ghost" href="https://www.behance.net/Aymensakhri" target="_blank" rel="noopener">Behance ↗</a>
+    <a class="btn btn-ghost" href="https://github.com/Sakhrouch" target="_blank" rel="noopener">GitHub ↗</a>
+    <a class="btn btn-primary" href="assets/CV-Aymen-Sakhri.pdf" download>CV (PDF) ↓</a>
+  </div>
+</section>
+</main>
+
+<footer class="wrap">
+  <span class="mono">© 2026 Aymen Sakhri · Tunis</span>
+  <span class="mono">Designé & codé par Aymen</span>
+</footer>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+  <div class="modal">
+    <button class="close" aria-label="Fermer">✕</button>
+    <div class="visual" id="dlg-visual"></div>
+    <div class="modal-body" id="dlg-body"></div>
+  </div>
+</dialog>
+
+<script>
+const CASES={
+  bct:{tag:"Stage PFE · Fév. → Mai 2026",title:"Plateforme de supervision et d'alertes",
+    meta:[["Client","Banque Centrale de Tunisie"],["Rôle","Designer UI/UX & Front-end"],["Équipe","Binôme"]],
+    context:"Les équipes techniques devaient surveiller serveurs et applications et repérer immédiatement les incidents critiques, sans se perdre dans des écrans chargés.",
+    did:["Deux espaces pensés pour deux usages : administrateur (gestion, ajout, édition) et utilisateur (consultation)","Tableau de bord serveurs : 4 indicateurs clés, liste filtrable et fiche détaillée (CPU, mémoire, stockage, uptime) sur le même écran","Historique : calendrier des incidents cliquable et graphique des alertes warning / critique jour par jour","Gestion des applications métiers : ajout via modale, disponibilité, charge et latence","Personas, user flows, wireframes et prototypes interactifs sur Figma","Hiérarchie visuelle par niveau de gravité (critique, warning, résolu) pour lire l'essentiel en un coup d'œil","Bibliothèque de composants Figma (Auto Layout, variantes) et handoff via Dev Mode","Développement front-end responsive avec Angular, HTML5, CSS3 et Bootstrap"],
+    out:"Une plateforme conçue sur Figma puis développée en Angular : une interface cohérente, de la maquette au code, où l'information critique ressort en premier.",
+    tools:["Figma","Angular","TypeScript","HTML5","CSS3","Bootstrap"],
+    code:"https://github.com/Sakhrouch/bank-supervision-ui"},
+  rouh:{tag:"Projet universitaire · 2025",title:"Rouh El Herfa : l'âme de l'artisanat tunisien, en ligne",
+    meta:[["Type","Site e-commerce"],["Rôle","Designer UI/UX"],["Pages","Accueil → paiement"]],
+    context:"Les artisans tunisiens créent des pièces uniques (céramique, tissage, bijoux, décoration) mais restent peu visibles en ligne. Le site devait vendre ces produits tout en racontant le savoir-faire qui se cache derrière chaque pièce.",
+    did:["Identité : un logo calligraphique en arabe, « روح الحرفة », qui ancre la marque dans la culture tunisienne","Accueil qui raconte avant de vendre : grandes photos, ventes flash, catégories, coups de cœur et nouveautés","Fiche produit complète : galerie, variantes de couleur et de taille, quantité, réassurance livraison et retour","Parcours d'achat sans friction : panier clair, coupon, puis paiement en une page","Paiement à la livraison mis en avant, adapté aux habitudes d'achat en Tunisie","Inscription courte avec connexion Google pour ne pas perdre l'acheteur"],
+    out:"Un parcours complet, de la découverte au paiement, qui valorise l'artisanat sans le noyer dans l'interface.",
+    tools:["Figma","Parcours d'achat","Design system e-commerce"]},
+  makina:{tag:"Projet en cours · 2026",title:"Makina : louer un engin en quelques clics",
+    meta:[["Type","Plateforme de location"],["Rôle","Designer UI/UX"],["Statut","En cours"]],
+    context:"En Tunisie, trouver un engin de chantier, un camion, une caravane ou du matériel agricole à louer passe encore par le bouche-à-oreille et les appels. Makina veut réunir cette offre sur une seule plateforme, disponible dans les 24 gouvernorats.",
+    did:["Positionnement clair dès le premier écran : « Louez des engins et véhicules industriels en Tunisie en quelques clics »","Quatre univers de location dans la navigation : véhicules commerciaux, engins de chantier, caravanes et camping-cars, matériel agricole","Carrousel photo immersif pour faire ressentir chaque univers","Direction artistique sombre avec un vert vif, en écho à l'agriculture et à l'énergie du chantier, avec une palette de verts explorée sur Figma","Réassurance : matériel certifié, avec ou sans chauffeur, près de chez soi"],
+    out:"Projet en cours de conception : les prochaines étapes sont le catalogue, la fiche engin et le parcours de réservation.",
+    tools:["Figma","Direction artistique","UI web"]},
+  mind:{tag:"PFA · 2025 → 2026",title:"NOVA : prendre soin de son mental, une étoile à la fois",
+    meta:[["Type","Site web + marque"],["Rôle","Designer UI/UX"],["Équipe","3 personnes"]],
+    context:"45,3 % des nouveaux étudiants vivent une détresse psychologique et 64,4 % un épuisement académique (études menées à Sfax et Sousse). Pourtant, en parler reste tabou et beaucoup n'osent pas demander de l'aide. NOVA devait offrir un espace digital bienveillant pour comprendre, prévenir et apaiser.",
+    did:["Recherche : données d'études tunisiennes et questionnaire auprès des étudiants pour partir de besoins réels","Personas, arborescence, wireframes puis maquettes haute fidélité","Site complet : accueil, « Santé mentale 101 », « Kit de vie » et espace personnel","Outils d'auto-évaluation : « Comment ça va, vraiment ? » avec curseur illustré, et journal d'humeur (émotions, énergie, charge)","Parcours dédié aux situations de crise, au ton rassurant, avec un accès direct à l'aide","Identité de marque : wordmark NOVA et icône étoile construits sur grille","Campagne d'affichage déclinée en plusieurs séries pour sortir la santé mentale du silence","Accessibilité (WCAG) : contrastes, tailles de texte, langage simple"],
+    out:"Une marque cohérente du logo à l'affiche jusqu'à l'interface, qui transforme un sujet tabou en conversation accessible pour les étudiants.",
+    tools:["Figma","Illustrator","Photoshop","Recherche utilisateur","Identité visuelle"]},
+  vr:{tag:"Projet universitaire · 2023",title:"Gabès Margoum : l'application qui augmente l'événement",
+    meta:[["Type","App mobile événementielle"],["Rôle","Designer UI/UX"],["Contexte","ISAMM"]],
+    context:"Un événement dédié au margoum, le tissage traditionnel de Gabès et d'Oudhref : 30 stands, 25 ateliers, des centaines de visiteurs. L'enjeu : permettre de réserver son billet, de s'orienter sur place et de vivre l'artisanat autrement qu'en simple spectateur.",
+    did:["Onboarding immersif qui met en avant les artisanes et leur savoir-faire dès le premier écran","Accueil centré sur l'événement : statut en direct, stands, ateliers et programme jour par jour","Billetterie mobile : réservation et billet avec code-barres et période de validité","Porte-clés NFC connecté pour suivre sa progression dans les stands visités","Navigation en réalité augmentée : un guidage pas à pas, avec la distance restante, jusqu'au stand ou à l'objet recherché","Une identité visuelle glassmorphism bleue, cohérente sur tous les écrans"],
+    out:"Un parcours complet, de la découverte à la visite sur place, qui relie l'artisanat traditionnel tunisien à la technologie immersive.",
+    tools:["Figma","Prototypage mobile","Réalité augmentée","NFC"]}
+};
+/* MEDIA: drop exported Figma screens in assets/projects/ and list them here.
+   type "desktop" = browser mockup, "mobile" = phone mockup. The first desktop image is the card cover. */
+const MEDIA={
+  bct:{url:"supervision.bct.tn",images:[
+    {src:"assets/projects/bct-serveurs.png",type:"desktop",caption:"Tableau de bord serveurs : indicateurs clés, liste filtrable et fiche détaillée côte à côte"},
+    {src:"assets/projects/bct-detail.png",type:"desktop",caption:"Statuts lisibles en un coup d'œil : en ligne, avertissement, hors ligne, maintenance"},
+    {src:"assets/projects/bct-historique.webp",type:"desktop",caption:"Historique : calendrier des incidents et graphique des alertes par jour"},
+    {src:"assets/projects/bct-applications.jpg",type:"desktop",caption:"Applications métiers : ajout en modale, disponibilité, charge et latence"},
+    {src:"assets/projects/bct-login.webp",type:"desktop",caption:"Connexion sécurisée, avec deux espaces : administrateur et utilisateur"}]},
+  rouh:{url:"rouhelherfa.tn",images:[
+    {src:"assets/projects/rouh-home.webp",type:"desktop",caption:"Accueil : l'artisanat tunisien mis en scène, ventes flash, catégories et nouveautés"},
+    {src:"assets/projects/rouh-produit.webp",type:"desktop",caption:"Fiche produit : galerie, variantes, quantité et réassurance livraison et retour"},
+    {src:"assets/projects/rouh-panier.jpg",type:"desktop",caption:"Panier : récapitulatif clair, coupon et total toujours visible"},
+    {src:"assets/projects/rouh-paiement.jpg",type:"desktop",caption:"Paiement : paiement à la livraison, l'option la plus utilisée en Tunisie"},
+    {src:"assets/projects/rouh-compte.webp",type:"desktop",caption:"Inscription : formulaire court et connexion Google en un clic"}]},
+  makina:{url:"makina.tn",images:[
+    {src:"assets/projects/makina-home.png",type:"desktop",caption:"Accueil : la promesse en une phrase et les quatre univers de location en carrousel"}]},
+  mind:{url:"www.nova.tn",images:[
+    {src:"assets/projects/nova-home.webp",type:"desktop",caption:"Accueil : chiffres d'études tunisiennes, mission et accès aux trois espaces (Apprendre, Kit de vie, Comment ça va ?)"},
+    {src:"assets/projects/nova-humeur.png",type:"desktop",caption:"« Comment ça va, vraiment ? » : un curseur illustré pour exprimer son état sans avoir à l'écrire"},
+    {src:"assets/projects/nova-journal.png",type:"desktop",caption:"Journal d'humeur : émotions, niveau d'énergie et charge ressentie, enregistrés jour après jour"},
+    {src:"assets/projects/nova-crise.png",type:"desktop",caption:"Page de crise : un ton calme, sans jugement, et un accès direct à l'aide"},
+    {src:"assets/projects/nova-login.png",type:"desktop",caption:"Connexion : simple et épurée, pour ne pas ajouter de friction"},
+    {src:"assets/projects/nova-wordmark.png",type:"image",caption:"Identité : le wordmark NOVA, construit sur grille"},
+    {src:"assets/projects/nova-icone.png",type:"image",caption:"L'icône étoile, déclinable seule : « une étoile à la fois »"},
+    {src:"assets/projects/nova-affiche-1.webp",type:"image",caption:"Campagne : « Et si on parlait enfin de santé mentale ? »"},
+    {src:"assets/projects/nova-affiche-2.webp",type:"image",caption:"Campagne : « Les murs de silence », en trois déclinaisons de couleur"},
+    {src:"assets/projects/nova-affiche-3.webp",type:"image",caption:"Série pédagogique : trouble anxieux, dépression, burnout"}]},
+  vr:{url:"gabes-margoum.app",images:[
+    {src:"assets/projects/event-1.png",type:"mobile",caption:"Onboarding : les artisanes et le savoir-faire du margoum, dès le premier écran"},
+    {src:"assets/projects/event-2.png",type:"mobile",caption:"Accueil : statut de l'événement en direct, programme par jour et porte-clés NFC connecté"},
+    {src:"assets/projects/event-3.png",type:"mobile",caption:"Billetterie : billet mobile avec code-barres et période de validité"},
+    {src:"assets/projects/event-4.png",type:"mobile",caption:"Réalité augmentée : guidage pas à pas jusqu'à l'élément recherché"}]}
+};
+const browser=(im,url)=>`<div class="mock-browser"><div class="mb-bar"><i></i><i></i><i></i><span class="mb-url">${url}</span></div><div class="mb-screen"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div></div>`;
+const phone=im=>`<div class="mock-phone"><div class="ps"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div></div>`;
+const plain=im=>`<div class="mock-plain"><img src="${im.src}" alt="${im.caption||''}" loading="lazy"></div>`;
+const device=(im,url)=>im.type==='mobile'?phone(im):im.type==='image'?plain(im):browser(im,url);
+
+/* swap CSS placeholder visuals for real screens when available */
+document.querySelectorAll('.proj').forEach(card=>{
+  const m=MEDIA[card.dataset.id]; if(!m||!m.images.length) return;
+  const d=m.images.find(i=>i.type!=='mobile'), phones=m.images.filter(i=>i.type==='mobile');
+  const v=card.querySelector('.visual'); v.className='visual';
+  v.innerHTML=`<div class="stage${d?'':' phones'}">${d?browser(d,m.url)+(phones[0]?phone(phones[0]):''):phones.slice(1,4).map(phone).join('')}</div>`;
+});
+document.addEventListener('load',e=>{const im=e.target; if(im.tagName==='IMG'&&im.closest('.mb-screen')&&im.naturalHeight/im.naturalWidth>.8) im.classList.add('tall')},true);
+
+const dlg=document.getElementById('dlg');
+let gi=0;
+function fit(){const s=dlg.querySelector('.slides'); if(s) s.parentElement.style.height=s.children[gi].offsetHeight+'px'}
+function go(n){const s=dlg.querySelector('.slides'); if(!s) return; const k=s.children.length; gi=(n+k)%k; s.style.transform=`translateX(-${gi*100}%)`; dlg.querySelectorAll('.g-dots button').forEach((b,i)=>b.classList.toggle('on',i===gi)); fit()}
+dlg.addEventListener('load',fit,true);
+document.querySelectorAll('.proj').forEach(card=>card.addEventListener('click',()=>{
+  const id=card.dataset.id, c=CASES[id], m=MEDIA[id]||{images:[]};
+  const vis=document.getElementById('dlg-visual');
+  if(m.images.length){
+    vis.className='gallery';
+    vis.innerHTML=`<div class="slides-wrap"><div class="slides">${m.images.map(im=>`<figure class="slide">${device(im,m.url)}${im.caption?`<figcaption>${im.caption}</figcaption>`:''}</figure>`).join('')}</div></div>
+      ${m.images.length>1?`<button class="g-nav g-prev" aria-label="Précédent">‹</button><button class="g-nav g-next" aria-label="Suivant">›</button><div class="g-dots">${m.images.map((_,i)=>`<button aria-label="Image ${i+1}"></button>`).join('')}</div>`:''}`;
+    vis.querySelector('.g-prev')?.addEventListener('click',()=>go(gi-1));
+    vis.querySelector('.g-next')?.addEventListener('click',()=>go(gi+1));
+    vis.querySelectorAll('.g-dots button').forEach((b,i)=>b.addEventListener('click',()=>go(i)));
+  } else {
+    vis.className=card.querySelector('.visual').className;
+    vis.innerHTML=card.querySelector('.visual').innerHTML;
+  }
+  gi=0;
+  document.getElementById('dlg-body').innerHTML=`<span class="mono">${c.tag}</span><h3 id="dlg-title">${c.title}</h3>
+    <div class="meta">${c.meta.map(x=>`<div><span class="mono">${x[0]}</span><b>${x[1]}</b></div>`).join('')}</div>
+    <h4>Le défi</h4><p style="color:#d5dbd2">${c.context}</p>
+    <h4>Ce que j'ai fait</h4><ul>${c.did.map(d=>`<li>${d}</li>`).join('')}</ul>
+    <h4>Résultat</h4><p style="color:#d5dbd2">${c.out}</p>
+    ${c.tools?`<h4>Outils</h4><div class="tools">${c.tools.map(t=>`<span class="pill">${t}</span>`).join('')}</div>`:''}
+    ${c.code?`<a class="btn btn-primary" style="margin-top:22px" href="${c.code}" target="_blank" rel="noopener">Voir le code Angular sur GitHub ↗</a>`:''}
+    <p class="note">Prototype et présentation complète sur <a href="https://www.behance.net/Aymensakhri" target="_blank" rel="noopener" class="grad" style="font-weight:600">Behance ↗</a></p>`;
+  dlg.showModal(); go(0);
+}));
+document.addEventListener('keydown',e=>{if(!dlg.open)return; if(e.key==='ArrowRight')go(gi+1); if(e.key==='ArrowLeft')go(gi-1)});
+dlg.querySelector('.close').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* manifesto word highlight */
+const m=document.getElementById('manifesto');
+m.innerHTML=m.textContent.split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
+const words=[...m.querySelectorAll('.w')];
+function paint(){const r=m.getBoundingClientRect();const p=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.35)));const n=Math.round(p*words.length);words.forEach((w,i)=>w.classList.toggle('on',i<n))}
+addEventListener('scroll',paint,{passive:true});paint();
+
+/* parallax board + custom cursor */
+const board=document.getElementById('board'),cur=document.getElementById('cur');
+addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  const r=board.getBoundingClientRect();const x=(e.clientX-r.left-r.width/2)/r.width,y=(e.clientY-r.top-r.height/2)/r.height;
+  board.querySelectorAll('.frame').forEach(f=>{const d=+f.dataset.depth;f.style.transform=`translate(${x*d}px,${y*d}px)`});
+});
+document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>cur.classList.add('hover'));el.addEventListener('mouseleave',()=>cur.classList.remove('hover'))});
+
+/* ===== creative layer ===== */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches, FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* intro loader */
+(()=>{const intro=document.getElementById('intro'); if(!intro) return;
+  let seen=false; try{seen=sessionStorage.getItem('introSeen')==='1'}catch(e){}
+  if(seen||RM){intro.remove();return}
+  let done=false; const html=document.documentElement; html.style.overflow='hidden';
+  const end=()=>{if(done)return; done=true; html.style.overflow=''; intro.classList.add('done'); try{sessionStorage.setItem('introSeen','1')}catch(e){} setTimeout(()=>intro.remove(),1000)};
+  const c=document.getElementById('count'), t0=performance.now(), D=2300;
+  (function tick(t){const p=Math.min(1,(t-t0)/D), e=1-Math.pow(1-p,3); c.textContent=String(Math.round(e*100)).padStart(3,'0'); if(done) return; p<1?requestAnimationFrame(tick):setTimeout(end,350)})(t0);
+  document.getElementById('skip').onclick=end;
+})();
+
+/* hero signal waves */
+(()=>{const cv=document.getElementById('waves'); if(!cv) return; const ctx=cv.getContext('2d'); let W,H,d,mx=.5,my=.5;
+  const rs=()=>{d=Math.min(devicePixelRatio||1,2); W=cv.width=innerWidth*d; H=cv.height=innerHeight*d; cv.style.height=innerHeight+'px'};
+  rs(); addEventListener('resize',rs); addEventListener('mousemove',e=>{mx=e.clientX/innerWidth; my=e.clientY/innerHeight},{passive:true});
+  const N=18;
+  const draw=t=>{ctx.clearRect(0,0,W,H);
+    for(let i=0;i<N;i++){const k=i/(N-1); const g=ctx.createLinearGradient(0,0,W,0);
+      g.addColorStop(0,'rgba(141,241,9,0)'); g.addColorStop(.35,`rgba(141,241,9,${.08+.22*(1-Math.abs(k-.5)*2)})`); g.addColorStop(.75,`rgba(196,255,104,${.06+.2*(1-Math.abs(k-.5)*2)})`); g.addColorStop(1,'rgba(141,241,9,0)');
+      ctx.strokeStyle=g; ctx.lineWidth=(1+ (k>.45&&k<.55?1.2:0))*d; ctx.beginPath();
+      for(let x=0;x<=W;x+=W/90){const u=x/W; const y=H*(.78-.42*u)+Math.sin(u*Math.PI*2.2+t/2400+k*1.1)*H*(.06+.05*mx)+(k-.5)*H*(.18+.08*my); x?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+      ctx.stroke();}
+  };
+  if(RM){draw(0);return}
+  (function loop(t){if(scrollY<innerHeight*1.1) draw(t); requestAnimationFrame(loop)})(0);
+})();
+
+/* full-screen menu */
+(()=>{const menu=document.getElementById('menu'), mb=document.getElementById('menuBtn');
+  const set=o=>{menu.classList.toggle('open',o); mb.textContent=o?'FERMER ✕':'MENU +'; mb.setAttribute('aria-expanded',o); document.documentElement.style.overflow=o?'hidden':''};
+  mb.onclick=()=>set(!menu.classList.contains('open'));
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>set(false)));
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.classList.contains('open')) set(false)});
+})();
+
+/* scroll progress */
+const bar=document.getElementById('progress');
+addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight; bar.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});
+
+/* brand vault: copy colors + open NOVA gallery at a given image */
+document.querySelectorAll('.tok').forEach(t=>t.addEventListener('click',()=>{
+  const ok=()=>{t.classList.add('ok'); setTimeout(()=>t.classList.remove('ok'),1200)};
+  try{navigator.clipboard.writeText(t.dataset.hex).then(ok,ok)}catch(e){ok()}
+}));
+document.querySelectorAll('.vtile').forEach(v=>v.addEventListener('click',()=>{document.querySelector('.proj[data-id=mind]').click(); go(+v.dataset.go)}));
+
+/* 3D tilt + magnetic buttons (desktop only) */
+if(FINE&&!RM){
+  document.querySelectorAll('.proj,.vtile').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; el.style.transform=`perspective(1000px) rotateX(${-y*5}deg) rotateY(${x*6}deg) translateY(-4px)`});
+    el.addEventListener('mouseleave',()=>{el.style.transform=''});
+  });
+  document.querySelectorAll('.btn-primary,.mag').forEach(el=>{
+    el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect(); el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.22}px,${(e.clientY-r.top-r.height/2)*.3}px)`});
+    el.addEventListener('mouseleave',()=>{el.style.transform=''});
+  });
+}
+</script>
+</body>
+</html>
