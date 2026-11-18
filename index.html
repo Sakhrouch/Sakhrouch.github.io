@@ -435,6 +435,39 @@ body{position:relative}
 .split.in .wd>span{transform:none}
 .split .grad{background:none;color:inherit}
 .split .grad .wd>span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* hero: orbit of tools */
+.orbit{position:relative;width:min(100%,540px);aspect-ratio:1;justify-self:center}
+.orbit::before{content:"";position:absolute;inset:22%;border-radius:50%;background:radial-gradient(circle,rgba(141,241,9,.28),transparent 70%);filter:blur(10px);animation:pulseGlow 4s ease-in-out infinite}
+@keyframes pulseGlow{50%{transform:scale(1.12);opacity:.7}}
+.ring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.12);animation:spin var(--sp) linear infinite}
+.ring.r1{inset:20%;--sp:38s;--r:calc(540px*.3)}
+.ring.r2{inset:2%;--sp:60s;animation-direction:reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ring .it{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(calc(var(--i)*360deg/var(--n))) translateY(var(--rad)) }
+.ring.r1 .it{--rad:calc(min(100vw - 40px,540px)*-.3)}
+.ring.r2 .it{--rad:calc(min(100vw - 40px,540px)*-.48)}
+.ring .it>span{position:absolute;left:0;top:0;transform:translate(-50%,-50%) rotate(calc(var(--i)*-360deg/var(--n)));display:block}
+.ring .it>span{animation:counter var(--sp) linear infinite}
+.ring.r2 .it>span{animation-direction:reverse}
+@keyframes counter{from{rotate:0deg}to{rotate:-360deg}}
+.ring .it img{max-width:none;width:54px;height:54px;padding:11px;border-radius:16px;background:rgba(18,22,25,.92);border:1px solid rgba(255,255,255,.12);box-shadow:0 14px 30px -12px rgba(0,0,0,.8);display:block;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s}
+.ring.r1 .it img{width:48px;height:48px;padding:10px}
+.ring .it>span.inv img{background:#f2f5ef}
+.ring .it em{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);font-style:normal;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;white-space:nowrap;color:var(--text);background:rgba(8,10,12,.85);border:1px solid var(--line);padding:3px 8px;border-radius:999px;opacity:0;transition:opacity .25s}
+.ring .it:hover img{transform:scale(1.25);border-color:var(--blue);box-shadow:0 0 30px -4px rgba(141,241,9,.6)}
+.ring .it:hover em{opacity:1}
+.orbit:hover .ring{animation-play-state:paused}.orbit:hover .ring .it>span{animation-play-state:paused}
+.core{position:absolute;inset:36%;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:radial-gradient(circle at 30% 25%,#1d2421,#0b0e0d);border:1px solid rgba(141,241,9,.35);box-shadow:0 0 60px -10px rgba(141,241,9,.45),inset 0 0 30px rgba(141,241,9,.08)}
+.core>img{width:34%;height:auto;position:absolute;top:24%}
+.core>img:first-child{left:14%}.core>img:nth-child(3){right:14%}
+.core .arrow-flow{position:absolute;top:32%;color:var(--blue);font-size:20px;animation:flow 2s ease-in-out infinite}
+@keyframes flow{50%{transform:translateX(4px);opacity:.5}}
+.core small{position:absolute;bottom:20%;font-size:10px;letter-spacing:.14em;color:var(--blue)}
+/* design → code band */
+.code-band{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center;padding:60px 0 140px}
+.cb-title{font-family:var(--display);font-size:clamp(34px,4.6vw,60px);line-height:1;letter-spacing:-.03em;margin-top:14px}
+@media (max-width:960px){.code-band{grid-template-columns:1fr;gap:34px;padding:40px 0 90px}.orbit{width:min(100%,440px)}}
+@media (max-width:600px){.ring.r2 .it{--rad:calc(min(100vw - 40px,540px)*-.42)}.ring.r1 .it{--rad:calc(min(100vw - 40px,540px)*-.27)}.ring .it img{width:40px;height:40px;padding:8px}.ring.r1 .it img{width:36px;height:36px;padding:7px}}
 /* hero: live Angular editor that "compiles" into the BCT site */
 .ide{position:relative;border-radius:22px;border:1px solid var(--line);background:linear-gradient(160deg,#121619,#0a0c0e);box-shadow:0 50px 90px -40px rgba(0,0,0,.9),0 0 0 1px rgba(141,241,9,.06);overflow:hidden;min-height:470px;transform:perspective(1400px) rotateY(-8deg) rotateX(3deg);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
 .ide:hover{transform:perspective(1400px) rotateY(0) rotateX(0)}
@@ -604,6 +637,40 @@ body{position:relative}
     </div>
   </div>
 
+  <div class="orbit reveal" aria-label="Mes outils : design et développement">
+    <div class="ring r1" style="--n:6">
+      <span class="it" style="--i:0"><span><img src="assets/tools/angular-original.svg" alt=""><em>Angular</em></span></span>
+      <span class="it" style="--i:1"><span><img src="assets/tools/typescript-original.svg" alt=""><em>TypeScript</em></span></span>
+      <span class="it" style="--i:2"><span><img src="assets/tools/html5-original.svg" alt=""><em>HTML5</em></span></span>
+      <span class="it" style="--i:3"><span><img src="assets/tools/css3-original.svg" alt=""><em>CSS3</em></span></span>
+      <span class="it" style="--i:4"><span><img src="assets/tools/bootstrap-original.svg" alt=""><em>Bootstrap</em></span></span>
+      <span class="it" style="--i:5"><span><img src="assets/tools/vscode-original.svg" alt=""><em>VS Code</em></span></span>
+    </div>
+    <div class="ring r2" style="--n:8">
+      <span class="it" style="--i:0"><span><img src="assets/tools/figma-original.svg" alt=""><em>Figma</em></span></span>
+      <span class="it" style="--i:1"><span><img src="assets/tools/photoshop-original.svg" alt=""><em>Photoshop</em></span></span>
+      <span class="it" style="--i:2"><span><img src="assets/tools/illustrator-plain.svg" alt=""><em>Illustrator</em></span></span>
+      <span class="it" style="--i:3"><span><img src="assets/tools/xd-original.svg" alt=""><em>Adobe XD</em></span></span>
+      <span class="it" style="--i:4"><span><img src="assets/tools/premierepro-original.svg" alt=""><em>Premiere Pro</em></span></span>
+      <span class="it" style="--i:5"><span><img src="assets/tools/aftereffects-original.svg" alt=""><em>After Effects</em></span></span>
+      <span class="it" style="--i:6"><span><img src="assets/tools/git-original.svg" alt=""><em>Git</em></span></span>
+      <span class="it" style="--i:7"><span class="inv"><img src="assets/tools/github-original.svg" alt=""><em>GitHub</em></span></span>
+    </div>
+    <div class="core">
+      <img src="assets/tools/figma-original.svg" alt="Figma"><span class="arrow-flow">⇄</span><img src="assets/tools/angular-original.svg" alt="Angular">
+      <small class="mono">Design → Code</small>
+    </div>
+  </div>
+</header>
+
+<!-- FROM DESIGN TO CODE -->
+<section class="wrap code-band" id="code">
+  <div class="code-txt reveal">
+    <p class="mono">— Du design au code</p>
+    <h2 class="cb-title">Je ne m'arrête pas<br>à la <span class="grad">maquette.</span></h2>
+    <p class="lead" style="margin-top:18px">Mon stage à la Banque Centrale : maquettes sur Figma, puis développement de la plateforme en Angular. Voici un extrait du vrai code du projet, publié sur GitHub.</p>
+    <a class="btn btn-ghost" style="margin-top:26px" href="https://github.com/Sakhrouch/bank-supervision-ui" target="_blank" rel="noopener">Voir le dépôt GitHub ↗</a>
+  </div>
   <div class="ide reveal" id="ide" aria-label="Extrait du code Angular du projet de supervision BCT">
     <div class="ide-top"><i></i><i></i><i></i><span class="ide-tab on">server.service.ts</span><span class="ide-tab">servers.ts</span><span class="ide-badge">Angular 21</span></div>
     <pre class="ide-code" id="ideCode"></pre>
@@ -613,8 +680,7 @@ body{position:relative}
       <img src="assets/projects/bct-serveurs.png" alt="Plateforme de supervision BCT développée en Angular">
     </div>
   </div>
-
-</header>
+</section>
 
 <!-- MARQUEE -->
 <div class="marquee" aria-hidden="true"><div class="track">
