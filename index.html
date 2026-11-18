@@ -547,6 +547,41 @@ body{position:relative}
 .role-pill.ng{background:linear-gradient(135deg,rgba(124,92,255,.42),rgba(124,92,255,.14));color:#F4F1FF;border-color:rgba(124,92,255,.6);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
 .role-pill{backdrop-filter:blur(12px);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.02));border-color:rgba(255,255,255,.18)}
 
+/* ===== stronger glass ===== */
+.btn,.menu-btn,.snd-btn,.close,.g-nav{backdrop-filter:blur(26px) saturate(190%);-webkit-backdrop-filter:blur(26px) saturate(190%)}
+.btn-ghost,.menu-btn,.snd-btn,.close,.g-nav{background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.3);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.45),inset 0 -8px 16px rgba(255,255,255,.04),0 12px 32px -14px rgba(0,0,0,.85)}
+.btn-primary{background:linear-gradient(135deg,rgba(124,92,255,.6),rgba(255,92,168,.28));border:1px solid rgba(255,255,255,.4);color:#fff;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.55),inset 0 0 22px rgba(124,92,255,.35),0 14px 40px -12px rgba(124,92,255,.75)}
+.btn-primary:hover{background:linear-gradient(135deg,rgba(124,92,255,.72),rgba(255,92,168,.4))}
+/* glossy top highlight */
+.btn::before,.menu-btn::before,.snd-btn::before{content:"";position:absolute;left:6%;right:6%;top:1px;height:48%;border-radius:999px;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.34),rgba(255,255,255,0))}
+/* ===== hero tool wall ===== */
+.toolwall{position:relative;padding:26px;border-radius:28px;border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(150deg,rgba(255,255,255,.08),rgba(255,255,255,.015));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 40px 80px -40px rgba(0,0,0,.9)}
+.toolwall::before{content:"";position:absolute;inset:-30% -10% auto auto;width:70%;height:70%;border-radius:50%;background:radial-gradient(circle,rgba(124,92,255,.35),transparent 70%);filter:blur(20px);z-index:-1;animation:pulseGlow 5s ease-in-out infinite}
+@keyframes pulseGlow{50%{transform:scale(1.15);opacity:.7}}
+.tw-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.tw-flow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);color:var(--cyan);padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.05)}
+.tw-flow img{width:18px;height:18px}
+.tw-cat{margin:18px 0 10px;color:var(--muted)}
+.tw-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media (max-width:420px){.tw-row{grid-template-columns:repeat(3,1fr)}}
+.tool{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px 11px;border-radius:18px;cursor:default;
+  background:linear-gradient(150deg,rgba(255,255,255,.1),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 12px 26px -16px rgba(0,0,0,.9);
+  opacity:0;transform:translateY(18px) scale(.9);animation:toolIn .7s cubic-bezier(.2,.8,.2,1) forwards, toolBob 5s ease-in-out infinite;
+  animation-delay:calc(var(--d)*70ms + 300ms), calc(var(--d)*-.4s);transition:border-color .3s,box-shadow .3s,background .3s}
+@keyframes toolIn{to{opacity:1;transform:none}}
+@keyframes toolBob{0%,100%{translate:0 0}50%{translate:0 -5px}}
+.tool img{max-width:none;width:34px;height:34px;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.tool.inv img{background:#f4f1ff;border-radius:50%;padding:2px}
+.tool span{font-size:11.5px;color:#dcd6ec;white-space:nowrap}
+.tool:hover{border-color:rgba(124,92,255,.7);background:linear-gradient(150deg,rgba(124,92,255,.28),rgba(255,92,168,.08));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 34px -6px rgba(124,92,255,.7)}
+.tool:hover img{transform:scale(1.22) rotate(-8deg)}
+@media (prefers-reduced-motion:reduce){.tool{opacity:1;transform:none}}
 /* ===== about ===== */
 .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
 .portrait{position:relative;width:min(100%,380px);aspect-ratio:1;justify-self:center}
@@ -634,7 +669,7 @@ body{position:relative}
 <div class="dot-cursor" id="cur"></div>
 
 <nav>
-  <a href="#top" class="brand"><img src="assets/portrait.png" alt="Aymen Sakhri">AYMEN<span class="grad">.</span></a>
+  <a href="#top" class="brand">AYMEN<span class="grad">.</span></a>
   <div class="links">
     <a href="#about-me">À propos</a><a href="#services">Services</a><a href="#work">Projets</a><a href="#vault">Identité</a><a href="#path">Parcours</a>
   </div>
@@ -690,28 +725,27 @@ body{position:relative}
     </div>
   </div>
 
-  <div class="orbit reveal" aria-label="Mes outils : design et développement">
-    <div class="ring r1" style="--n:6">
-      <span class="it" style="--i:0"><span><img src="assets/tools/angular-original.svg" alt=""><em>Angular</em></span></span>
-      <span class="it" style="--i:1"><span><img src="assets/tools/typescript-original.svg" alt=""><em>TypeScript</em></span></span>
-      <span class="it" style="--i:2"><span><img src="assets/tools/html5-original.svg" alt=""><em>HTML5</em></span></span>
-      <span class="it" style="--i:3"><span><img src="assets/tools/css3-original.svg" alt=""><em>CSS3</em></span></span>
-      <span class="it" style="--i:4"><span><img src="assets/tools/bootstrap-original.svg" alt=""><em>Bootstrap</em></span></span>
-      <span class="it" style="--i:5"><span><img src="assets/tools/vscode-original.svg" alt=""><em>VS Code</em></span></span>
+  <div class="toolwall reveal" aria-label="Mes outils">
+    <div class="tw-head"><span class="mono">Mes outils</span><span class="tw-flow"><img src="assets/tools/figma-original.svg" alt=""> → <img src="assets/tools/angular-original.svg" alt=""></span></div>
+    <p class="tw-cat mono">Design</p>
+    <div class="tw-row">
+      <div class="tool" style="--d:0"><img src="assets/tools/figma-original.svg" alt=""><span>Figma</span></div>
+      <div class="tool" style="--d:1"><img src="assets/tools/photoshop-original.svg" alt=""><span>Photoshop</span></div>
+      <div class="tool" style="--d:2"><img src="assets/tools/illustrator-plain.svg" alt=""><span>Illustrator</span></div>
+      <div class="tool" style="--d:3"><img src="assets/tools/xd-original.svg" alt=""><span>Adobe XD</span></div>
+      <div class="tool" style="--d:4"><img src="assets/tools/premierepro-original.svg" alt=""><span>Premiere</span></div>
+      <div class="tool" style="--d:5"><img src="assets/tools/aftereffects-original.svg" alt=""><span>After Effects</span></div>
     </div>
-    <div class="ring r2" style="--n:8">
-      <span class="it" style="--i:0"><span><img src="assets/tools/figma-original.svg" alt=""><em>Figma</em></span></span>
-      <span class="it" style="--i:1"><span><img src="assets/tools/photoshop-original.svg" alt=""><em>Photoshop</em></span></span>
-      <span class="it" style="--i:2"><span><img src="assets/tools/illustrator-plain.svg" alt=""><em>Illustrator</em></span></span>
-      <span class="it" style="--i:3"><span><img src="assets/tools/xd-original.svg" alt=""><em>Adobe XD</em></span></span>
-      <span class="it" style="--i:4"><span><img src="assets/tools/premierepro-original.svg" alt=""><em>Premiere Pro</em></span></span>
-      <span class="it" style="--i:5"><span><img src="assets/tools/aftereffects-original.svg" alt=""><em>After Effects</em></span></span>
-      <span class="it" style="--i:6"><span><img src="assets/tools/git-original.svg" alt=""><em>Git</em></span></span>
-      <span class="it" style="--i:7"><span class="inv"><img src="assets/tools/github-original.svg" alt=""><em>GitHub</em></span></span>
-    </div>
-    <div class="core">
-      <img src="assets/tools/figma-original.svg" alt="Figma"><span class="arrow-flow">⇄</span><img src="assets/tools/angular-original.svg" alt="Angular">
-      <small class="mono">Design → Code</small>
+    <p class="tw-cat mono">Code</p>
+    <div class="tw-row">
+      <div class="tool" style="--d:6"><img src="assets/tools/angular-original.svg" alt=""><span>Angular</span></div>
+      <div class="tool" style="--d:7"><img src="assets/tools/typescript-original.svg" alt=""><span>TypeScript</span></div>
+      <div class="tool" style="--d:8"><img src="assets/tools/html5-original.svg" alt=""><span>HTML5</span></div>
+      <div class="tool" style="--d:9"><img src="assets/tools/css3-original.svg" alt=""><span>CSS3</span></div>
+      <div class="tool" style="--d:10"><img src="assets/tools/bootstrap-original.svg" alt=""><span>Bootstrap</span></div>
+      <div class="tool" style="--d:11"><img src="assets/tools/vscode-original.svg" alt=""><span>VS Code</span></div>
+      <div class="tool" style="--d:12"><img src="assets/tools/git-original.svg" alt=""><span>Git</span></div>
+      <div class="tool inv" style="--d:13"><img src="assets/tools/github-original.svg" alt=""><span>GitHub</span></div>
     </div>
   </div>
 </header>
