@@ -363,7 +363,7 @@ body{position:relative}
 .vtile img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
 .vtile:hover img{transform:scale(1.07)}
 .vtile span{position:absolute;left:10px;bottom:10px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:rgba(8,10,12,.7);padding:5px 9px;border-radius:999px;color:var(--text)}
-.vtile.w2{grid-column:span 2}.vtile.h2{grid-row:span 2}
+.vtile.w2{grid-column:span 2}.vtile.h2{grid-row:span 2}.vtile.w3{grid-column:span 3}
 .vtile:hover{box-shadow:0 26px 50px -24px rgba(141,241,9,.7)}
 /* projects as alternating rows, ordered by strength */
 .projects{grid-template-columns:1fr;gap:28px}
@@ -545,7 +545,7 @@ body{position:relative}
 }
 @media (max-width:600px){
   .vgrid{grid-template-columns:1fr 1fr;grid-auto-rows:130px}
-  .vtile.w2{grid-column:span 2}
+  .vtile.w2,.vtile.w3{grid-column:span 2}
   .tokens{grid-template-columns:repeat(2,1fr)}
   #intro{padding:20px 16px}
   .intro-top span:last-child{display:none}
@@ -814,11 +814,12 @@ body{position:relative}
     </div>
     <div class="vgrid">
       <button class="vtile w2" data-go="5"><img src="assets/projects/nova-wordmark.png" alt="Wordmark NOVA" loading="lazy"><span>Wordmark</span></button>
-      <button class="vtile h2" data-go="3"><img src="assets/projects/nova-crise.png" alt="Page de crise NOVA" loading="lazy" style="object-position:left"><span>Interface</span></button>
-      <button class="vtile" data-go="6"><img src="assets/projects/nova-icone.png" alt="Icône NOVA" loading="lazy"><span>Icône</span></button>
-      <button class="vtile" data-go="9"><img src="assets/projects/nova-affiche-3.webp" alt="Série d'affiches NOVA" loading="lazy"><span>Série</span></button>
-      <button class="vtile w2" data-go="7"><img src="assets/projects/nova-affiche-1.webp" alt="Campagne NOVA" loading="lazy"><span>Campagne</span></button>
-      <button class="vtile" data-go="8"><img src="assets/projects/nova-affiche-2.webp" alt="Les murs de silence" loading="lazy"><span>Affichage</span></button>
+      <button class="vtile" data-go="6"><img src="assets/projects/nova-icone.png" alt="Icône NOVA" loading="lazy" style="object-position:68% 50%;transform-origin:68% 50%"><span>Icône</span></button>
+      <button class="vtile w2" data-go="7"><img src="assets/projects/nova-carte-recto.webp" alt="Carte de visite NOVA, recto" loading="lazy"><span>Carte · recto</span></button>
+      <button class="vtile" data-go="8"><img src="assets/projects/nova-carte-verso.webp" alt="Carte de visite NOVA, verso" loading="lazy"><span>Carte · verso</span></button>
+      <button class="vtile" data-go="11"><img src="assets/projects/nova-affiche-3.webp" alt="Série d'affiches NOVA" loading="lazy"><span>Série</span></button>
+      <button class="vtile w2" data-go="9"><img src="assets/projects/nova-affiche-1.webp" alt="Campagne NOVA" loading="lazy"><span>Campagne</span></button>
+      <button class="vtile w3" data-go="10"><img src="assets/projects/nova-affiche-2.webp" alt="Les murs de silence" loading="lazy"><span>Affichage</span></button>
     </div>
   </div>
 </section>
@@ -923,7 +924,7 @@ const CASES={
   mind:{tag:"PFA · 2025 → 2026",title:"NOVA : prendre soin de son mental, une étoile à la fois",
     meta:[["Type","Site web + marque"],["Rôle","Designer UI/UX"],["Équipe","3 personnes"]],
     context:"45,3 % des nouveaux étudiants vivent une détresse psychologique et 64,4 % un épuisement académique (études menées à Sfax et Sousse). Pourtant, en parler reste tabou et beaucoup n'osent pas demander de l'aide. NOVA devait offrir un espace digital bienveillant pour comprendre, prévenir et apaiser.",
-    did:["Recherche : données d'études tunisiennes et questionnaire auprès des étudiants pour partir de besoins réels","Personas, arborescence, wireframes puis maquettes haute fidélité","Site complet : accueil, « Santé mentale 101 », « Kit de vie » et espace personnel","Outils d'auto-évaluation : « Comment ça va, vraiment ? » avec curseur illustré, et journal d'humeur (émotions, énergie, charge)","Parcours dédié aux situations de crise, au ton rassurant, avec un accès direct à l'aide","Identité de marque : wordmark NOVA et icône étoile construits sur grille","Campagne d'affichage déclinée en plusieurs séries pour sortir la santé mentale du silence","Accessibilité (WCAG) : contrastes, tailles de texte, langage simple"],
+    did:["Recherche : données d'études tunisiennes et questionnaire auprès des étudiants pour partir de besoins réels","Personas, arborescence, wireframes puis maquettes haute fidélité","Site complet : accueil, « Santé mentale 101 », « Kit de vie » et espace personnel","Outils d'auto-évaluation : « Comment ça va, vraiment ? » avec curseur illustré, et journal d'humeur (émotions, énergie, charge)","Parcours dédié aux situations de crise, au ton rassurant, avec un accès direct à l'aide","Identité de marque : wordmark NOVA et icône étoile construits sur grille, déclinés sur cartes de visite","Campagne d'affichage déclinée en plusieurs séries pour sortir la santé mentale du silence","Accessibilité (WCAG) : contrastes, tailles de texte, langage simple"],
     out:"Une marque cohérente du logo à l'affiche jusqu'à l'interface, qui transforme un sujet tabou en conversation accessible pour les étudiants.",
     tools:["Figma","Illustrator","Photoshop","Recherche utilisateur","Identité visuelle"]},
   vr:{tag:"Projet universitaire · 2023",title:"Gabès Margoum : l'application qui augmente l'événement",
@@ -958,6 +959,8 @@ const MEDIA={
     {src:"assets/projects/nova-login.png",type:"desktop",caption:"Connexion : simple et épurée, pour ne pas ajouter de friction"},
     {src:"assets/projects/nova-wordmark.png",type:"image",caption:"Identité : le wordmark NOVA, construit sur grille"},
     {src:"assets/projects/nova-icone.png",type:"image",caption:"L'icône étoile, déclinable seule : « une étoile à la fois »"},
+    {src:"assets/projects/nova-carte-recto.webp",type:"image",caption:"Carte de visite, recto : le wordmark doré sur le bleu électrique de la marque"},
+    {src:"assets/projects/nova-carte-verso.webp",type:"image",caption:"Carte de visite, verso : la promesse et les contacts, dans la même typographie"},
     {src:"assets/projects/nova-affiche-1.webp",type:"image",caption:"Campagne : « Et si on parlait enfin de santé mentale ? »"},
     {src:"assets/projects/nova-affiche-2.webp",type:"image",caption:"Campagne : « Les murs de silence », en trois déclinaisons de couleur"},
     {src:"assets/projects/nova-affiche-3.webp",type:"image",caption:"Série pédagogique : trouble anxieux, dépression, burnout"}]},
