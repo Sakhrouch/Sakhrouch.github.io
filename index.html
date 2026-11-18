@@ -527,26 +527,6 @@ body{position:relative}
 .proj:hover .stage.phones .phone-shot{transform:translateY(-10px)}
 .slide .phone-shot{height:auto;max-height:64vh;width:auto;max-width:100%}
 @media (max-width:960px){.stage.phones .phone-shot:nth-child(n+3){display:none}}
-/* ===== glass buttons ===== */
-.btn,.menu-btn,.snd-btn,.close,.g-nav{position:relative;overflow:hidden;isolation:isolate;
-  backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%)}
-.btn-ghost,.menu-btn,.snd-btn,.close,.g-nav{background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.03));
-  border:1px solid rgba(255,255,255,.2);color:var(--text);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.04),0 10px 30px -14px rgba(0,0,0,.8)}
-.btn-primary{background:linear-gradient(135deg,rgba(124,92,255,.42),rgba(124,92,255,.14));
-  border:1px solid rgba(124,92,255,.6);color:#F4F1FF;text-shadow:0 1px 8px rgba(0,0,0,.35);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 0 18px rgba(124,92,255,.25),0 12px 34px -12px rgba(124,92,255,.65)}
-.btn-primary:hover{background:linear-gradient(135deg,rgba(124,92,255,.55),rgba(124,92,255,.2));box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 0 22px rgba(124,92,255,.35),0 16px 44px -12px rgba(124,92,255,.8)}
-.btn-ghost:hover,.menu-btn:hover,.snd-btn:hover,.close:hover,.g-nav:hover{background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(255,255,255,.06));border-color:rgba(255,255,255,.32)}
-/* light sweep across the glass on hover */
-.btn::after,.menu-btn::after,.snd-btn::after{content:"";position:absolute;inset:-2px auto -2px -60%;width:45%;z-index:-1;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .7s cubic-bezier(.2,.8,.2,1)}
-.btn:hover::after,.menu-btn:hover::after,.snd-btn:hover::after{left:120%}
-.arrow{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.02));border-color:rgba(255,255,255,.2);backdrop-filter:blur(10px)}
-.proj:hover .arrow{background:linear-gradient(135deg,rgba(124,92,255,.5),rgba(124,92,255,.15));color:#F4F1FF;border-color:rgba(124,92,255,.6)}
-.role-pill.ng{background:linear-gradient(135deg,rgba(124,92,255,.42),rgba(124,92,255,.14));color:#F4F1FF;border-color:rgba(124,92,255,.6);backdrop-filter:blur(12px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3)}
-.role-pill{backdrop-filter:blur(12px);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.02));border-color:rgba(255,255,255,.18)}
-
 /* ===== tools band (scrolling, like the words marquee) ===== */
 .tools-band{border-block:1px solid var(--line);overflow:hidden;padding:18px 0;background:rgba(12,10,18,.6);
   -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
